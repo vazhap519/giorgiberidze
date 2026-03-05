@@ -3,10 +3,10 @@ import { usePage } from "@inertiajs/react"
 import SeoHead from "../Components/SeoHead.jsx"
 import HeroCarousel from "@/Components/HeroCarousel.jsx"
 import ProductCard from "@/Components/ProductCard.jsx"
-
+import SectionTitle from "@/Components/SectionTitle"
 export default function Home() {
 
-    const { seo, slides, products } = usePage().props
+    const { seo, slides, products,siteSettings  } = usePage().props
 
     const [visible, setVisible] = useState(3)
 
@@ -25,6 +25,11 @@ export default function Home() {
 
             {/* PRODUCTS */}
             <section className="max-w-7xl mx-auto py-20 px-6">
+
+                {/* SECTION HEADER */}
+
+                <SectionTitle title={siteSettings?.products_title} />
+
 
                 <div className="
         grid

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SiteSettings\Schemas;
 
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -38,7 +39,9 @@ SpatieMediaLibraryFileUpload::make('logo')
     ->conversion('webp')
     ->responsiveImages()
     ->required(),
-
+Section::make('საიტის სექციების სათაურები')->schema([
+    TextInput::make('products_title')->label('პროდუქტები')
+])
             ]);
     }
 }

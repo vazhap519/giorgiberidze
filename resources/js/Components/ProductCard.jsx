@@ -57,22 +57,48 @@ export default function ProductCard({ product }) {
             </div>
 
             {/* RIGHT SLIDE OVERLAY */}
-            <div className="absolute inset-y-0 right-0 w-full bg-black/85 text-white p-6 flex flex-col justify-center transform translate-x-full group-hover:translate-x-0 transition-transform duration-500">
+            {/*<div className="absolute inset-y-0 right-0 w-full bg-black/85 text-white p-6 flex flex-col justify-center transform translate-x-full group-hover:translate-x-0 transition-transform duration-500">*/}
 
-                <h3 className="text-xl font-bold mb-4">
+            {/*    <h3 className="text-xl font-bold mb-4">*/}
+            {/*        {product.title}*/}
+            {/*    </h3>*/}
+
+            {/*    <ul className="space-y-2 text-sm leading-relaxed">*/}
+
+            {/*        {product.features?.map((item, index) => (*/}
+            {/*            <li key={index}>{item.feature}</li>*/}
+            {/*        ))}*/}
+
+            {/*    </ul>*/}
+
+            {/*</div>*/}
+            <div className="
+absolute inset-y-0 right-0 w-full
+bg-black/85 text-white
+px-6 pt-14
+flex flex-col
+items-center
+text-center
+transform translate-x-full
+group-hover:translate-x-0
+transition-transform duration-500
+">
+
+                <h3 className="text-xl font-bold mb-4 break-words max-w-[220px]">
                     {product.title}
                 </h3>
 
-                <ul className="space-y-2 text-sm leading-relaxed">
+                <ul className="space-y-2 text-sm leading-relaxed max-w-[220px]">
 
                     {product.features?.map((item, index) => (
-                        <li key={index}>{item.feature}</li>
+                        <li key={index} className="break-words">
+                            {item.feature}
+                        </li>
                     ))}
 
                 </ul>
 
             </div>
-
         </div>
     )
 }
