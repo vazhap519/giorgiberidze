@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+use Illuminate\Support\Facades\Route;
 use App\Models\Seo;
 
 class GenerateSitemap extends Command
@@ -17,23 +19,53 @@ class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
-        // homepage
-        $sitemap->add(
-            Url::create('/')
-                ->setPriority(1.0)
-                ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
-        );
+        /*
+        |--------------------------------------------------------------------------
+        | Crawl existing pages
+        |--------------------------------------------------------------------------
+        */
 
-        // pages SEO table-დან
-        Seo::whereNotNull('page')->get()->each(function ($seo) use ($sitemap) {
+        $generated = SitemapGenerator::create(config('app.url'))->getSitemap();
 
-            $sitemap->add(
-                Url::create("/{$seo->page}")
-                    ->setLastModificationDate($seo->updated_at)
-                    ->setPriority(0.8)
-            );
+        foreach ($generated->getTags() as $tag) {
+            $sitemap->add($tag);
+        }
 
-        });
+        /*
+        |--------------------------------------------------------------------------
+        | SEO pages from Filament
+        |--------------------------------------------------------------------------
+        */
+
+        Seo::query()
+            ->whereNotNull('page')
+            ->get()
+            ->each(function ($seo) use ($sitemap) {
+
+                $routeName = $seo->page;
+
+                // homepage fix
+                if ($routeName === '/') {
+                    $routeName = 'home';
+                }
+
+                // თუ route არ არსებობს უბრალოდ skip
+                if (!Route::has($routeName)) {
+                    return;
+                }
+
+                $sitemap->add(
+                    Url::create(route($routeName))
+                        ->setLastModificationDate($seo->updated_at)
+                        ->setPriority($routeName === 'home' ? 1.0 : 0.8)
+                );
+            });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save sitemap
+        |--------------------------------------------------------------------------
+        */
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
 

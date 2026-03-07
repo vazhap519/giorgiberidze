@@ -17,15 +17,7 @@ use Filament\Tables\Table;
 class SeoResource extends Resource
 {
     protected static ?string $model = Seo::class;
-    public static function getModelLabel(): string
-    {
-        return 'საძიებო სისტემები';
-    }
 
-    public static function getPluralModelLabel(): string
-    {
-        return 'საძიებო სისტემები';
-    }
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function form(Schema $schema): Schema

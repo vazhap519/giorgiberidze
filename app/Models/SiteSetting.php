@@ -15,7 +15,17 @@ class SiteSetting extends Model implements HasMedia
 
     protected $fillable = [
         'site_name',
-        'products_title'
+        'products_title',
+        'services_header',
+        'about_header',
+
+        'contact_header',
+        'contact_left_title',
+        'contact_form_title',
+        'contact_service_title',
+
+        'contact_form_button',
+        'contact_service_button'
     ];
 
     protected $appends = [

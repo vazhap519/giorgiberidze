@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('seos', function (Blueprint $table) {
+
             $table->id();
 
-            $table->string('page')->nullable()->unique();
-            // NULL = homepage
+            $table->string('page')->unique()->index();
 
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
 
-            $table->string('canonical_url')->nullable()->index();
+            $table->string('canonical_url')->nullable();
 
             $table->string('og_title')->nullable();
             $table->text('og_description')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('twitter_title')->nullable();
             $table->text('twitter_description')->nullable();
 
-            $table->boolean('indexable')->default(true)->index();
+            $table->boolean('indexable')->default(true);
 
             $table->timestamps();
 

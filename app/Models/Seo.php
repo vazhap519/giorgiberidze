@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -12,19 +13,14 @@ class Seo extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-
         'page',
-
         'meta_title',
         'meta_description',
         'canonical_url',
-
         'og_title',
         'og_description',
-
         'twitter_title',
         'twitter_description',
-
         'indexable',
     ];
 
@@ -33,7 +29,7 @@ class Seo extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'og_image_url'
+        'og_image_url',
     ];
 
     /*
@@ -55,28 +51,66 @@ class Seo extends Model implements HasMedia
             ->nonQueued();
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Accessor
+    |--------------------------------------------------------------------------
+    */
+
     public function getOgImageUrlAttribute(): ?string
     {
         $media = $this->getFirstMedia('og_image');
 
-        return $media?->hasGeneratedConversion('webp')
+        if (! $media) {
+            return null;
+        }
+
+        return $media->hasGeneratedConversion('webp')
             ? $media->getUrl('webp')
-            : $media?->getUrl();
+            : $media->getUrl();
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Helpers
+    | Canonical auto
     |--------------------------------------------------------------------------
     */
 
-    public function scopeForPage($query, $page = null)
+    public function getCanonicalUrlAttribute($value)
     {
-        return $query->where('page', $page)->first();
+        if ($value) {
+            return $value;
+        }
+
+        if ($this->page === 'home') {
+            return url('/');
+        }
+
+        if (\Route::has($this->page)) {
+            return route($this->page);
+        }
+
+        return url('/');
     }
 
-    public static function homepage()
+    /*
+    |--------------------------------------------------------------------------
+    | Cache
+    |--------------------------------------------------------------------------
+    */
+
+    public static function getForPage(string $page)
     {
-        return static::whereNull('page')->first();
+        return Cache::remember(
+            "seo_$page",
+            3600,
+            fn () => static::where('page', $page)->first()
+        );
+    }
+
+    protected static function booted()
+    {
+        static::saved(fn ($seo) => Cache::forget("seo_$seo->page"));
+        static::deleted(fn ($seo) => Cache::forget("seo_$seo->page"));
     }
 }

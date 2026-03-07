@@ -40,8 +40,35 @@ SpatieMediaLibraryFileUpload::make('logo')
     ->responsiveImages()
     ->required(),
 Section::make('საიტის სექციების სათაურები')->schema([
-    TextInput::make('products_title')->label('პროდუქტები')
-])
+    TextInput::make('products_title')->label('პროდუქტების სათაური'),
+    TextInput::make('services_header')->label('სერვისების სათაური'),
+
+    TextInput::make('about_header')->label('ჩვენს შესახებ სათაური'),
+
+
+]),
+
+              Section::make('კონტაქტის სექციის სათაურები და ღილაკების ტექსტები')->schema([
+
+                  TextInput::make('contact_header')
+                      ->label('კონტაქტის მთავარი სათაური'),
+
+                  TextInput::make('contact_left_title')
+                      ->label('მარცხენა ბლოკის სათაური'),
+
+                  TextInput::make('contact_form_title')
+                      ->label('ფორმის სათაური'),
+
+                  TextInput::make('contact_service_title')
+                      ->label('სერვისის მოთხოვნის სათაური'),
+
+                  TextInput::make('contact_form_button')
+                      ->label('ფორმის ღილაკის ტექსტი'),
+
+                  TextInput::make('contact_service_button')
+                      ->label('სერვისის მოთხოვნის ღილაკი'),
+
+              ])
             ]);
     }
 }

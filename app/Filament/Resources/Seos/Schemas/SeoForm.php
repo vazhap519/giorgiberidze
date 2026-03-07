@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\Seos\Schemas;
 
-use Filament\Schemas\Components\Tabs;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Toggle;
 
 class SeoForm
 {
@@ -19,13 +20,11 @@ class SeoForm
                 Select::make('page')
                     ->label('Page')
                     ->options([
-                        '/' => 'Homepage',
-                        'about' => 'About',
-                        'contact' => 'Contact',
-                        'blog' => 'Blog',
+                        'home' => 'Homepage',
+                        'projects' => 'Projects',
                     ])
-                    ->nullable()
-                    ->helperText('NULL = Homepage'),
+                    ->required()
+                    ->unique(ignoreRecord: true),
 
                 Tabs::make('SEO')
                     ->tabs([
@@ -41,19 +40,22 @@ class SeoForm
                                     ->label('Meta Description')
                                     ->maxLength(160),
 
-                                TextInput::make('canonical_url')
-                                    ->label('Canonical URL'),
-
-                                Select::make('indexable')
-                                    ->label('Indexing')
-                                    ->options([
-                                        true => 'Index',
-                                        false => 'No Index'
-                                    ])
+                                Toggle::make('indexable')
+                                    ->label('Indexable')
                                     ->default(true),
-
                             ]),
 
+
+                        Tabs\Tab::make('Twitter')
+                            ->schema([
+
+                                TextInput::make('twitter_title')
+                                    ->label('Twitter Title'),
+
+                                Textarea::make('twitter_description')
+                                    ->label('Twitter Description'),
+
+                            ]),
                         Tabs\Tab::make('Open Graph')
                             ->schema([
 
@@ -74,18 +76,6 @@ class SeoForm
                                     ->columnSpanFull(),
 
                             ]),
-
-                        Tabs\Tab::make('Twitter')
-                            ->schema([
-
-                                TextInput::make('twitter_title')
-                                    ->label('Twitter Title'),
-
-                                Textarea::make('twitter_description')
-                                    ->label('Twitter Description'),
-
-                            ]),
-
                     ])
 
             ]);

@@ -15,7 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('site_name');
             $table->string('products_title')->nullable();
-
+            $table->string('services_header')->nullable();
+            $table->string('contact_header')->nullable();
+            $table->string('about_header')->nullable();
+            $table->string('contact_left_title')->nullable();
+            $table->string('contact_form_title')->nullable();
+            $table->string('contact_service_title')->nullable();
+            $table->string('contact_form_button')->nullable();
+            $table->string('contact_service_button')->nullable();
             $table->timestamps();
         });
     }

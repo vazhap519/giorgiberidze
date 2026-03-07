@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CarouselSlide;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Models\Service;
+use App\Models\Project;
 use Inertia\Inertia;
 
 class HomePageController extends Controller
@@ -22,9 +23,22 @@ class HomePageController extends Controller
             ->get()
             ->append(['image_url']);
 
+        $services = Service::query()
+            ->latest()
+            ->get()
+            ->append(['image_url']);
+
+        $projects = Project::query()
+            ->where('is_active', true)
+            ->latest()
+            ->get()
+            ->append(['cover_image']);
+
         return Inertia::render('Home', [
             'slides' => $slides,
             'products' => $products,
+            'services' => $services,
+            'projects' => $projects
         ]);
     }
 }
