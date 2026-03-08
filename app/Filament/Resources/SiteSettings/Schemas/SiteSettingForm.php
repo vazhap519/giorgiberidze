@@ -44,7 +44,7 @@ Section::make('საიტის სექციების სათაურ
     TextInput::make('services_header')->label('სერვისების სათაური'),
 
     TextInput::make('about_header')->label('ჩვენს შესახებ სათაური'),
-
+   TextInput::make('project_header')->label('პროექტების სათაური'),
 
 ]),
 
@@ -68,7 +68,25 @@ Section::make('საიტის სექციების სათაურ
                   TextInput::make('contact_service_button')
                       ->label('სერვისის მოთხოვნის ღილაკი'),
 
-              ])
+              ]),
+              Section::make('Footer')->schema([
+
+    TextInput::make('footer_navigation_title')
+        ->label('Footer Navigation Title'),
+
+    TextInput::make('footer_contact_title')
+        ->label('Footer Contact Title'),
+
+    TextInput::make('footer_social_title')
+        ->label('Footer Social Title'),
+
+    TextInput::make('footer_copyright')
+        ->label('Footer Copyright'),
+
+    TextInput::make('footer_description')
+        ->label('Footer Description'),
+
+])
             ]);
     }
 }

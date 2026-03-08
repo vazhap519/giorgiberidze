@@ -77,7 +77,7 @@ class ProjectForm
                                     ->imageEditor()
                                     ->disk('public')
                                     ->responsiveImages()
-                                    ->helperText('Upload project gallery images')
+                                    ->helperText('ატვირთე პროექტის სურათები')
                                     ->columnSpanFull(),
 
 
@@ -91,7 +91,7 @@ class ProjectForm
                                     ->multiple()
                                     ->reorderable()
                                     ->disk('public')
-                                    ->maxSize(512000)
+                                  ->maxSize(1024000)
                                     ->acceptedFileTypes([
                                         'video/mp4',
                                         'video/webm',
@@ -99,7 +99,7 @@ class ProjectForm
                                         'video/x-msvideo',
                                         'video/x-matroska'
                                     ])
-                                    ->helperText('Upload project videos')
+                                    ->helperText('ატვირთე პროექტის ვიდეოები')
                                     ->columnSpanFull(),
 
 

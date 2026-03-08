@@ -8,175 +8,425 @@ import ServiceCard from "@/Components/ServiceCard.jsx"
 import Contact from "@/Components/Contact.jsx";
 import Header from "@/Components/Header.jsx";
 import ProjectCard from "@/Components/ProjectCard.jsx";
+import AboutUs from "../Components/AboutUs.jsx"
+import Footer from "@/Components/Footer.jsx"
+// export default function Home() {
 
+// const { seo, slides, products, siteSettings, services, projects, about } = usePage().props
+
+//     /* PRODUCTS STATE */
+//     const [visibleProductsCount, setVisibleProductsCount] = useState(3)
+
+//     /* SERVICES STATE */
+//     const [visibleServicesCount, setVisibleServicesCount] = useState(3)
+
+//     /* LOAD MORE FUNCTIONS */
+//     const loadMoreProducts = () => {
+//         setVisibleProductsCount((prev) => prev + 3)
+//     }
+
+//     const loadMoreServices = () => {
+//         setVisibleServicesCount((prev) => prev + 3)
+//     }
+
+//     /* VISIBLE DATA */
+//     const visibleProducts = products.slice(0, visibleProductsCount)
+//     const visibleServices = services.slice(0, visibleServicesCount)
+
+//     return (
+//         <div>
+
+//             <SeoHead seo={seo} pageTitle="Home" />
+//             {/*Header*/}
+//             <Header siteSettings={siteSettings} />
+//             {/*Hero*/}
+//             <HeroCarousel slides={slides} />
+//             {/* SERVICES */}
+//             {services.length > 0 && (
+//                 <section  id="services" className="max-w-7xl mx-auto py-20 px-6">
+
+//                     <SectionTitle title={siteSettings?.services_header} />
+
+//                     <div className="
+//         grid
+//         grid-cols-1
+//         sm:grid-cols-2
+//         lg:grid-cols-3
+//         gap-10
+//         justify-items-center
+//         items-start
+//         mt-12
+//     ">
+
+//                         {visibleServices.map((service) => (
+//                             <div
+//                                 key={service.id}
+//                                 className="animate-fadeIn w-full flex justify-center"
+//                             >
+//                                 <ServiceCard service={service} />
+//                             </div>
+//                         ))}
+
+//                     </div>
+
+//                     {visibleServicesCount < services.length && (
+
+//                         <div className="flex justify-center mt-12">
+
+//                             <button
+//                                 onClick={loadMoreServices}
+//                                 className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+//                             >
+//                                 მეტი სერვისი
+//                             </button>
+
+//                         </div>
+
+//                     )}
+
+//                 </section>
+//             )}
+//             {/* PRODUCTS */}
+//             {products.length > 0 && (
+//                 <section id="products" className="max-w-7xl mx-auto py-20 px-6">
+
+//                     <SectionTitle title={siteSettings?.products_title} />
+
+//                     <div className="
+//         grid
+//         grid-cols-1
+//         sm:grid-cols-2
+//         lg:grid-cols-3
+//         xl:grid-cols-4
+//         gap-10
+//         justify-items-center
+//         mt-12
+//     ">
+
+//                         {visibleProducts.map((product) => (
+//                             <div
+//                                 key={product.id}
+//                                 className="animate-fadeIn w-full flex justify-center"
+//                             >
+//                                 <ProductCard product={product} />
+//                             </div>
+//                         ))}
+
+//                     </div>
+
+//                     {visibleProductsCount < products.length && (
+
+//                         <div className="flex justify-center mt-12">
+
+//                             <button
+//                                 onClick={loadMoreProducts}
+//                                 className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+//                             >
+//                                 სხვა პროდუქტები
+//                             </button>
+
+//                         </div>
+
+//                     )}
+
+//                 </section>
+//             )}
+//             {/* PROJECTS */}
+//             {projects?.length > 0 && (
+
+//                 <section id="projects" className="max-w-7xl mx-auto py-20 px-6">
+
+//                     <SectionTitle title="შესრულებული პროექტები" />
+//                     <div className="
+//         grid
+//         grid-cols-1
+//         sm:grid-cols-2
+//         lg:grid-cols-3
+//         xl:grid-cols-4
+//         gap-10
+//         justify-items-center
+//         mt-12
+//     ">
+
+//                         {projects.map((project) => (
+
+//                             <div
+//                                 key={project.id}
+//                                 className="animate-fadeIn w-full flex justify-center"
+//                             >
+//                                 <ProjectCard project={project} />
+//                             </div>
+
+//                         ))}
+
+//                     </div>
+//                 </section>
+
+//             )}
+// {/*About Us*/}
+
+// {about && <AboutUs about={about} />}
+//             {/*Contact*/}
+//             {siteSettings?.contact_header?.trim() && (
+//                 <section id="contact" className="max-w-full mx-auto py-20 px-6">
+
+//                     <section className="max-w-7xl mx-auto py-20 px-6">
+//                         <SectionTitle title={siteSettings.contact_header} />
+//                     </section>
+
+//                     <Contact />
+
+//                 </section>
+//             )}
+
+//         </div>
+//     )
+// }
 export default function Home() {
 
-    const { seo, slides, products, siteSettings, services,projects  } = usePage().props
+const { seo, slides, products, siteSettings, services, projects, about } = usePage().props
 
-    /* PRODUCTS STATE */
-    const [visibleProductsCount, setVisibleProductsCount] = useState(3)
+const [visibleProductsCount, setVisibleProductsCount] = useState(3)
+const [visibleServicesCount, setVisibleServicesCount] = useState(3)
 
-    /* SERVICES STATE */
-    const [visibleServicesCount, setVisibleServicesCount] = useState(3)
+const loadMoreProducts = () => setVisibleProductsCount(prev => prev + 3)
+const loadMoreServices = () => setVisibleServicesCount(prev => prev + 3)
 
-    /* LOAD MORE FUNCTIONS */
-    const loadMoreProducts = () => {
-        setVisibleProductsCount((prev) => prev + 3)
-    }
+const visibleProducts = products.slice(0, visibleProductsCount)
+const visibleServices = services.slice(0, visibleServicesCount)
 
-    const loadMoreServices = () => {
-        setVisibleServicesCount((prev) => prev + 3)
-    }
+return (
 
-    /* VISIBLE DATA */
-    const visibleProducts = products.slice(0, visibleProductsCount)
-    const visibleServices = services.slice(0, visibleServicesCount)
+<div className="bg-white overflow-hidden">
 
-    return (
-        <div>
+<SeoHead seo={seo} pageTitle="Home" />
 
-            <SeoHead seo={seo} pageTitle="Home" />
-            {/*Header*/}
-            <Header siteSettings={siteSettings} />
-            {/*Hero*/}
-            <HeroCarousel slides={slides} />
-            {/* SERVICES */}
-            {services.length > 0 && (
-                <section  id="services" className="max-w-7xl mx-auto py-20 px-6">
+<Header siteSettings={siteSettings} />
 
-                    <SectionTitle title={siteSettings?.services_header} />
+{/* HERO */}
 
-                    <div className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-3
-        gap-10
-        justify-items-center
-        items-start
-        mt-12
-    ">
+<HeroCarousel slides={slides} />
 
-                        {visibleServices.map((service) => (
-                            <div
-                                key={service.id}
-                                className="animate-fadeIn w-full flex justify-center"
-                            >
-                                <ServiceCard service={service} />
-                            </div>
-                        ))}
 
-                    </div>
 
-                    {visibleServicesCount < services.length && (
+{/* SERVICES */}
+{services.length > 0 && (
 
-                        <div className="flex justify-center mt-12">
+<section
+id="services"
+className="
+relative
+py-28
+bg-gradient-to-b
+from-white
+to-slate-50
+">
 
-                            <button
-                                onClick={loadMoreServices}
-                                className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-                            >
-                                მეტი სერვისი
-                            </button>
+<div className="max-w-7xl mx-auto px-6">
 
-                        </div>
+<SectionTitle title={siteSettings?.services_header} />
 
-                    )}
+<div className="
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-3
+gap-10
+mt-16
+">
 
-                </section>
-            )}
-            {/* PRODUCTS */}
-            {products.length > 0 && (
-                <section id="products" className="max-w-7xl mx-auto py-20 px-6">
+{visibleServices.map((service) => (
 
-                    <SectionTitle title={siteSettings?.products_title} />
+<ServiceCard
+key={service.id}
+service={service}
+/>
 
-                    <div className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-3
-        xl:grid-cols-4
-        gap-10
-        justify-items-center
-        mt-12
-    ">
+))}
 
-                        {visibleProducts.map((product) => (
-                            <div
-                                key={product.id}
-                                className="animate-fadeIn w-full flex justify-center"
-                            >
-                                <ProductCard product={product} />
-                            </div>
-                        ))}
+</div>
 
-                    </div>
+{visibleServicesCount < services.length && (
 
-                    {visibleProductsCount < products.length && (
+<div className="flex justify-center mt-16">
 
-                        <div className="flex justify-center mt-12">
+<button
+onClick={loadMoreServices}
+className="
+px-8
+py-3
+rounded-xl
+bg-blue-600
+text-white
+font-semibold
+shadow-lg
+hover:bg-blue-700
+hover:scale-[1.03]
+transition
+"
+>
+მეტი სერვისი
+</button>
 
-                            <button
-                                onClick={loadMoreProducts}
-                                className="px-8 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-                            >
-                                სხვა პროდუქტები
-                            </button>
+</div>
 
-                        </div>
+)}
 
-                    )}
+</div>
 
-                </section>
-            )}
-            {/* PROJECTS */}
-            {projects?.length > 0 && (
+</section>
 
-                <section id="projects" className="max-w-7xl mx-auto py-20 px-6">
+)}
 
-                    <SectionTitle title="შესრულებული პროექტები" />
+{/* PRODUCTS */}
+{products.length > 0 && (
 
-                    <div className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-3
-        xl:grid-cols-4
-        gap-10
-        justify-items-center
-        mt-12
-    ">
+<section
+id="products"
+className="
+relative
+py-28
+bg-white
+">
 
-                        {projects.map((project) => (
+<div className="max-w-7xl mx-auto px-6">
 
-                            <div
-                                key={project.id}
-                                className="animate-fadeIn w-full flex justify-center"
-                            >
-                                <ProjectCard project={project} />
-                            </div>
+<SectionTitle title={siteSettings?.products_title} />
 
-                        ))}
+<div className="
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-3
+xl:grid-cols-4
+gap-10
+mt-16
+">
 
-                    </div>
+{visibleProducts.map((product) => (
 
-                </section>
+<ProductCard
+key={product.id}
+product={product}
+/>
 
-            )}
-            {/*Contact*/}
-            {siteSettings?.contact_header?.trim() && (
-                <section id="contact" className="max-w-full mx-auto py-20 px-6">
+))}
 
-                    <section className="max-w-7xl mx-auto py-20 px-6">
-                        <SectionTitle title={siteSettings.contact_header} />
-                    </section>
+</div>
 
-                    <Contact />
+{visibleProductsCount < products.length && (
 
-                </section>
-            )}
+<div className="flex justify-center mt-16">
 
-        </div>
-    )
+<button
+onClick={loadMoreProducts}
+className="
+px-8
+py-3
+rounded-xl
+bg-blue-600
+text-white
+font-semibold
+shadow-lg
+hover:bg-blue-700
+hover:scale-[1.03]
+transition
+"
+>
+სხვა პროდუქტები
+</button>
+
+</div>
+
+)}
+
+</div>
+
+</section>
+
+)}
+
+{/* PROJECTS */}
+{projects?.length > 0 && (
+
+<section
+id="projects"
+className="
+relative
+py-28
+bg-slate-50
+">
+
+<div className="max-w-7xl mx-auto px-6">
+
+<SectionTitle title="შესრულებული პროექტები" />
+
+<div className="
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-3
+xl:grid-cols-4
+gap-10
+mt-16
+">
+
+{projects.map((project) => (
+
+<ProjectCard
+key={project.id}
+project={project}
+/>
+
+))}
+
+</div>
+
+</div>
+
+</section>
+
+)}
+{/* ABOUT */}
+{about && (
+
+<section
+className="
+relative
+py-28
+bg-white
+">
+
+<AboutUs about={about} />
+
+</section>
+
+)}
+{/* CONTACT */}
+{siteSettings?.contact_header?.trim() && (
+<section
+id="contact"
+className="
+relative
+py-28
+bg-gradient-to-b
+from-slate-50
+to-white
+">
+
+<div className="max-w-7xl mx-auto px-6 mb-16">
+
+<SectionTitle title={siteSettings.contact_header} />
+
+</div>
+
+<Contact />
+
+</section>
+
+)}
+<Footer />
+</div>
+
+)
 }

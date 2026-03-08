@@ -18,14 +18,23 @@ class SiteSetting extends Model implements HasMedia
         'products_title',
         'services_header',
         'about_header',
-
+'project_header',
         'contact_header',
         'contact_left_title',
         'contact_form_title',
         'contact_service_title',
 
         'contact_form_button',
-        'contact_service_button'
+        'contact_service_button',
+ 'contact_form_button',
+    'contact_service_button', // ← აქ აკლდა მძიმე
+
+    'footer_description',
+    'footer_navigation_title',
+    'footer_contact_title',
+    'footer_social_title',
+    'footer_copyright'
+
     ];
 
     protected $appends = [
