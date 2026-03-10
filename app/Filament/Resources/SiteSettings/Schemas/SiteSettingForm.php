@@ -48,45 +48,8 @@ Section::make('საიტის სექციების სათაურ
 
 ]),
 
-              Section::make('კონტაქტის სექციის სათაურები და ღილაკების ტექსტები')->schema([
 
-                  TextInput::make('contact_header')
-                      ->label('კონტაქტის მთავარი სათაური'),
 
-                  TextInput::make('contact_left_title')
-                      ->label('მარცხენა ბლოკის სათაური'),
-
-                  TextInput::make('contact_form_title')
-                      ->label('ფორმის სათაური'),
-
-                  TextInput::make('contact_service_title')
-                      ->label('სერვისის მოთხოვნის სათაური'),
-
-                  TextInput::make('contact_form_button')
-                      ->label('ფორმის ღილაკის ტექსტი'),
-
-                  TextInput::make('contact_service_button')
-                      ->label('სერვისის მოთხოვნის ღილაკი'),
-
-              ]),
-              Section::make('Footer')->schema([
-
-    TextInput::make('footer_navigation_title')
-        ->label('Footer Navigation Title'),
-
-    TextInput::make('footer_contact_title')
-        ->label('Footer Contact Title'),
-
-    TextInput::make('footer_social_title')
-        ->label('Footer Social Title'),
-
-    TextInput::make('footer_copyright')
-        ->label('Footer Copyright'),
-
-    TextInput::make('footer_description')
-        ->label('Footer Description'),
-
-])
             ]);
     }
 }

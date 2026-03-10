@@ -3,144 +3,184 @@
 //                                               setServiceForm,
 //                                               sendService,
 //                                               loading,
-//                                               siteSettings,
-//                                               contact
+//                                               contact = {}
 //                                           }) {
-
+//
+//     const shadowMap = {
+//         sm: "shadow-sm",
+//         md: "shadow-md",
+//         lg: "shadow-lg",
+//         xl: "shadow-xl",
+//     }
+//
 //     return (
-
-//         <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition">
-
-//             <h3 className="text-xl font-semibold mb-6">
-//                 {siteSettings?.contact_service_title}
+//
+//         <div
+//             style={{
+//                 background: contact?.card_bg ?? "#ffffff",
+//                 borderColor: contact?.card_border ?? "#e5e7eb",
+//                 borderWidth: contact?.card_border_width ?? 1,
+//                 borderRadius: contact?.card_radius ?? 16,
+//                 opacity: (contact?.card_opacity ?? 100) / 100
+//             }}
+//             className={`border p-8 ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
+//         >
+//
+//             <h3
+//                 style={{
+//                     color: contact?.title_color ?? "#111827",
+//                     fontSize: contact?.title_size ?? 20,
+//                     fontWeight: contact?.title_weight ?? 600
+//                 }}
+//                 className="mb-6"
+//             >
+//                 {contact?.service_form_title ?? "სერვისის მოთხოვნა"}
 //             </h3>
-
+//
 //             <form onSubmit={sendService} className="space-y-4">
-
+//
 //                 <select
 //                     value={serviceForm.service}
 //                     onChange={(e)=>setServiceForm({...serviceForm,service:e.target.value})}
-//                     className="w-full border border-gray-200 rounded-xl px-4 py-3"
-//                     required
+//                     style={{
+//                         borderRadius: contact?.input_radius ?? 10,
+//                         borderColor: contact?.input_border ?? "#e5e7eb"
+//                     }}
+//                     className="w-full px-4 py-3 border focus:outline-none"
 //                 >
-
-//                     <option value="">აირჩიეთ სერვისი</option>
-
-//                     {contact?.service_options?.map((service, index) => (
+//
+//                     <option value="">
+//                         აირჩიეთ სერვისი
+//                     </option>
+//
+//                     {(contact?.service_options ?? []).map((service,index)=>(
 //                         <option key={index} value={service.title}>
 //                             {service.title}
 //                         </option>
 //                     ))}
-
+//
 //                 </select>
-
+//
 //                 <input
 //                     type="text"
-//                     placeholder="სახელი გვარი"
+//                     placeholder={contact?.name_placeholder ?? "სახელი"}
 //                     value={serviceForm.name}
 //                     onChange={(e)=>setServiceForm({...serviceForm,name:e.target.value})}
-//                     className="w-full border border-gray-200 rounded-xl px-4 py-3"
-//                     required
+//                     style={{borderRadius:contact?.input_radius ?? 10}}
+//                     className="w-full px-4 py-3 border focus:outline-none"
 //                 />
-
+//
 //                 <input
 //                     type="text"
-//                     placeholder="მისამართი"
+//                     placeholder={contact?.address_placeholder ?? "მისამართი"}
 //                     value={serviceForm.address}
 //                     onChange={(e)=>setServiceForm({...serviceForm,address:e.target.value})}
-//                     className="w-full border border-gray-200 rounded-xl px-4 py-3"
+//                     style={{borderRadius:contact?.input_radius ?? 10}}
+//                     className="w-full px-4 py-3 border focus:outline-none"
 //                 />
-
+//
 //                 <input
 //                     type="tel"
-//                     placeholder="საკონტაქტო ტელეფონი"
+//                     placeholder={contact?.phone_placeholder ?? "ტელეფონი"}
 //                     value={serviceForm.phone}
-//                     onChange={(e) => {
-//                         const value = e.target.value.replace(/\D/g, "").slice(0, 9)
-//                         setServiceForm({ ...serviceForm, phone: value })
+//                     onChange={(e)=>{
+//                         const value = e.target.value.replace(/\D/g,"").slice(0,9)
+//                         setServiceForm({...serviceForm,phone:value})
 //                     }}
-//                     inputMode="numeric"
-//                     pattern="5[0-9]{8}"
-//                     maxLength={9}
-//                     className="w-full border border-gray-200 rounded-xl px-4 py-3"
-//                     required
+//                     style={{borderRadius:contact?.input_radius ?? 10}}
+//                     className="w-full px-4 py-3 border focus:outline-none"
 //                 />
+//
 //                 <textarea
 //                     rows="4"
-//                     placeholder="დამატებითი ინფორმაცია"
+//                     placeholder={contact?.message_placeholder ?? "შეტყობინება"}
 //                     value={serviceForm.message}
 //                     onChange={(e)=>setServiceForm({...serviceForm,message:e.target.value})}
-//                     className="w-full border border-gray-200 rounded-xl px-4 py-3"
+//                     style={{borderRadius:contact?.input_radius ?? 10}}
+//                     className="w-full px-4 py-3 border focus:outline-none"
 //                 />
-
+//
 //                 <button
 //                     type="submit"
 //                     disabled={loading}
-//                     className="w-full py-3 rounded-xl bg-blue-600 text-white"
+//                     style={{
+//                         background: `linear-gradient(135deg, ${contact?.button_bg_from ?? "#2563eb"}, ${contact?.button_bg_to ?? "#1d4ed8"})`,
+//                         color: contact?.button_text_color ?? "#ffffff",
+//                         borderRadius: contact?.button_radius ?? 10,
+//                         opacity: (contact?.button_opacity ?? 100) / 100
+//                 }}
+//                     className={`w-full py-3 ${shadowMap[contact?.button_shadow] ?? "shadow-md"}`}
 //                 >
-//                     {loading ? "იგზავნება..." : siteSettings?.contact_service_button}
+//                     {loading ? "იგზავნება..." : (contact?.service_form_button ?? "გაგზავნა")}
 //                 </button>
-
+//
 //             </form>
-
+//
 //         </div>
-
+//
 //     )
 // }
 export default function ContactForService({
-    serviceForm,
-    setServiceForm,
-    sendService,
-    loading,
-    siteSettings,
-    contact
-}) {
+                                              serviceForm,
+                                              setServiceForm,
+                                              sendService,
+                                              loading,
+                                              contact = {}
+                                          }) {
+
+    const shadowMap = {
+        sm: "shadow-sm",
+        md: "shadow-md",
+        lg: "shadow-lg",
+        xl: "shadow-xl",
+        "2xl": "shadow-2xl"
+    }
+
+    const inputStyle = {
+        background: contact?.input_bg ?? "#fff",
+        borderColor: contact?.input_border ?? "#e5e7eb",
+        borderWidth: contact?.input_border_width ?? 1,
+        borderRadius: contact?.input_radius ?? 10
+    }
 
     return (
 
-        <div className="
-            bg-white
-            rounded-2xl
-            shadow-lg
-            border border-gray-100
-            p-8
-            hover:shadow-2xl
-            transition
-        ">
+        <div
+            style={{
+                background: contact?.card_bg ?? "#ffffff",
+                borderColor: contact?.card_border ?? "#e5e7eb",
+                borderWidth: contact?.card_border_width ?? 1,
+                borderRadius: contact?.card_radius ?? 16,
+                opacity:(contact?.card_opacity ?? 100)/100
+            }}
+            className={`border p-8 ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
+        >
 
-            <h3 className="
-                text-xl
-                font-semibold
-                text-gray-900
-                mb-6
-            ">
-                {siteSettings?.contact_service_title}
+            <h3
+                style={{
+                    color: contact?.title_color,
+                    fontSize: contact?.title_size,
+                    fontWeight: contact?.title_weight
+                }}
+                className="mb-6"
+            >
+                {contact?.service_form_title}
             </h3>
 
             <form onSubmit={sendService} className="space-y-4">
 
-                {/* SERVICE SELECT */}
-
                 <select
                     value={serviceForm.service}
                     onChange={(e)=>setServiceForm({...serviceForm,service:e.target.value})}
-                    className="
-                        w-full
-                        border border-gray-200
-                        rounded-xl
-                        px-4 py-3
-                        bg-white
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-blue-500
-                        transition
-                    "
-                    required
+                    style={inputStyle}
+                    className="w-full px-4 py-3 border focus:outline-none"
                 >
 
-                    <option value="">აირჩიეთ სერვისი</option>
+                    <option value="">
+                        აირჩიეთ სერვისი
+                    </option>
 
-                    {contact?.service_options?.map((service, index) => (
+                    {(contact?.service_options ?? []).map((service,index)=>(
                         <option key={index} value={service.title}>
                             {service.title}
                         </option>
@@ -148,111 +188,57 @@ export default function ContactForService({
 
                 </select>
 
-                {/* NAME */}
-
                 <input
                     type="text"
-                    placeholder="სახელი გვარი"
+                    placeholder={contact?.name_placeholder}
                     value={serviceForm.name}
                     onChange={(e)=>setServiceForm({...serviceForm,name:e.target.value})}
-                    className="
-                        w-full
-                        border border-gray-200
-                        rounded-xl
-                        px-4 py-3
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-blue-500
-                        transition
-                    "
-                    required
+                    style={inputStyle}
+                    className="w-full px-4 py-3 border focus:outline-none"
                 />
-
-                {/* ADDRESS */}
 
                 <input
                     type="text"
-                    placeholder="მისამართი"
+                    placeholder={contact?.address_placeholder}
                     value={serviceForm.address}
                     onChange={(e)=>setServiceForm({...serviceForm,address:e.target.value})}
-                    className="
-                        w-full
-                        border border-gray-200
-                        rounded-xl
-                        px-4 py-3
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-blue-500
-                        transition
-                    "
+                    style={inputStyle}
+                    className="w-full px-4 py-3 border focus:outline-none"
                 />
-
-                {/* PHONE */}
 
                 <input
                     type="tel"
-                    placeholder="საკონტაქტო ტელეფონი"
+                    placeholder={contact?.phone_placeholder}
                     value={serviceForm.phone}
-                    onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, "").slice(0, 9)
-                        setServiceForm({ ...serviceForm, phone: value })
+                    onChange={(e)=>{
+                        const value=e.target.value.replace(/\D/g,"").slice(0,9)
+                        setServiceForm({...serviceForm,phone:value})
                     }}
-                    inputMode="numeric"
-                    pattern="5[0-9]{8}"
-                    maxLength={9}
-                    className="
-                        w-full
-                        border border-gray-200
-                        rounded-xl
-                        px-4 py-3
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-blue-500
-                        transition
-                    "
-                    required
+                    style={inputStyle}
+                    className="w-full px-4 py-3 border focus:outline-none"
                 />
-
-                {/* MESSAGE */}
 
                 <textarea
                     rows="4"
-                    placeholder="დამატებითი ინფორმაცია"
+                    placeholder={contact?.message_placeholder}
                     value={serviceForm.message}
                     onChange={(e)=>setServiceForm({...serviceForm,message:e.target.value})}
-                    className="
-                        w-full
-                        border border-gray-200
-                        rounded-xl
-                        px-4 py-3
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-blue-500
-                        transition
-                    "
+                    style={inputStyle}
+                    className="w-full px-4 py-3 border focus:outline-none"
                 />
-
-                {/* BUTTON */}
 
                 <button
                     type="submit"
                     disabled={loading}
-                    className="
-                        w-full
-                        py-3
-                        rounded-xl
-                        bg-gradient-to-r
-                        from-blue-600
-                        to-blue-500
-                        text-white
-                        font-medium
-                        shadow
-                        hover:shadow-lg
-                        hover:scale-[1.02]
-                        transition
-                    "
+                    style={{
+                        background:`linear-gradient(135deg, ${contact?.button_bg_from}, ${contact?.button_bg_to})`,
+                        color:contact?.button_text_color,
+                        borderRadius:contact?.button_radius,
+                        opacity:(contact?.button_opacity ?? 100)/100
+                    }}
+                    className={`w-full py-3 ${shadowMap[contact?.button_shadow] ?? "shadow-md"}`}
                 >
-                    {loading ? "იგზავნება..." : siteSettings?.contact_service_button}
+                    {loading ? "იგზავნება..." : contact?.service_form_button}
                 </button>
 
             </form>

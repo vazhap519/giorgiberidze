@@ -1,147 +1,271 @@
-
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Header({ siteSettings }) {
 
     const [open, setOpen] = useState(false);
+
+    const { menus } = usePage().props;
+
     const logo = siteSettings?.logo_url;
 
+    /*
+    |--------------------------------------------------------------------------
+    | Default Sections (თუ DB ცარიელია)
+    |--------------------------------------------------------------------------
+    */
+
+    const defaultMenus = [
+        { id: "services", title: "სერვისები", section: "services" },
+        { id: "products", title: "პროდუქტები", section: "products" },
+        { id: "projects", title: "პროექტები", section: "projects" },
+        { id: "contact", title: "კონტაქტი", section: "contact" },
+    ];
+
+    const navigation = menus?.length ? menus : defaultMenus;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Navbar Settings (Filament)
+    |--------------------------------------------------------------------------
+    */
+
+    const navbarSettings = menus?.length ? menus[0] : null;
+
+    const headerStyle = {
+        backgroundColor: navbarSettings?.nav_bg_color || "#d0d1d5",
+        backdropFilter: `blur(${navbarSettings?.nav_blur || 20}px)`,
+        opacity: navbarSettings?.nav_opacity ?? 0.6,
+        zIndex: navbarSettings?.nav_z_index || 50,
+    };
+
+    const linkColor = navbarSettings?.nav_link_color || "#9ba4b1";
+    const hoverColor = navbarSettings?.nav_hover_color || "#475569";
+
+    /*
+    |--------------------------------------------------------------------------
+    | CTA Button
+    |--------------------------------------------------------------------------
+    */
+
+    const ctaText = navbarSettings?.cta_text || "დაგვიკავშირდი";
+    const ctaLink = navbarSettings?.cta_link || "#contact";
+    const ctaBg = navbarSettings?.cta_bg_color || "#2563eb";
+    const ctaTextColor = navbarSettings?.cta_text_color || "#ffffff";
+    const ctaHover = navbarSettings?.cta_hover_color || "#1d4ed8";
+    const ctaRadius = navbarSettings?.cta_radius || 12;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    const resolveHref = (menu) => {
+        if (menu.route) {
+            return menu.route.startsWith("/")
+                ? menu.route
+                : `/${menu.route}`;
+        }
+
+        return `#${menu.section}`;
+    };
+
+    const handleHover = (e, color) => {
+        e.currentTarget.style.color = color;
+    };
+
+    const handleBgHover = (e, color) => {
+        e.currentTarget.style.backgroundColor = color;
+    };
+
     return (
-        <header className="w-full sticky top-0 z-50 backdrop-blur bg-white/80 shadow-sm">
 
-            <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
+        <div className="fixed w-full" style={{ zIndex: headerStyle.zIndex }}>
 
-                {/* LOGO */}
-                <Link href="/" className="flex items-center gap-3">
+            <header
+                style={headerStyle}
+                className="w-full border-b border-white/30"
+            >
 
-                    {logo && (
-                        <img
-                            src={logo}
-                            alt={siteSettings?.site_name}
-                            className="h-10 w-auto"
-                        />
-                    )}
+                <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
 
-                    <span className="hidden sm:block font-semibold text-lg text-slate-800">
-                        {siteSettings?.site_name}
-                    </span>
+                    {/* LOGO */}
+                    <Link href="/" className="flex items-center gap-3">
 
-                </Link>
-
-                {/* DESKTOP NAV */}
-                <nav className="hidden md:flex items-center gap-10 font-medium text-slate-700">
-
-                    <a
-                        href="#services"
-                        className="hover:text-blue-600 transition"
-                    >
-                        სერვისები
-                    </a>
-
-                    <a
-                        href="#products"
-                        className="hover:text-blue-600 transition"
-                    >
-                        პროდუქტები
-                    </a>
-
-                    <a
-                        href="#projects"
-                        className="hover:text-blue-600 transition"
-                    >
-                        პროექტები
-                    </a>
-
-                    <a
-                        href="#contact"
-                        className="hover:text-blue-600 transition"
-                    >
-                        კონტაქტი
-                    </a>
-
-                </nav>
-
-                {/* CTA BUTTON */}
-                <div className="hidden md:flex items-center gap-4">
-
-                    <a
-                        href="#contact"
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition shadow"
-                    >
-                        დაგვიკავშირდი
-                    </a>
-
-                </div>
-
-                {/* MOBILE MENU BUTTON */}
-                <button
-                    onClick={() => setOpen(!open)}
-                    className="md:hidden text-slate-700"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-7 w-7"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-
-                        {open ? (
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        ) : (
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 6h16M4 12h16M4 18h16"
+                        {logo && (
+                            <img
+                                src={logo}
+                                alt={siteSettings?.site_name}
+                                className="h-10 w-auto"
                             />
                         )}
 
-                    </svg>
-                </button>
+                        <span className="hidden sm:block font-semibold text-lg text-slate-800">
+                            {siteSettings?.site_name}
+                        </span>
 
-            </div>
+                    </Link>
 
-            {/* MOBILE NAV */}
-            {open && (
-                <div className="md:hidden border-t bg-white">
+                    {/* DESKTOP NAV */}
+                    <nav className="hidden md:flex items-center gap-10 font-medium">
 
-                    <nav className="flex flex-col gap-4 px-6 py-6 font-medium text-slate-700">
+                        {navigation.map(menu => {
 
-                        <a href="#services" onClick={() => setOpen(false)}>
-                            სერვისები
-                        </a>
+                            const href = resolveHref(menu);
 
-                        <a href="#products" onClick={() => setOpen(false)}>
-                            პროდუქტები
-                        </a>
+                            const baseStyle = { color: linkColor };
 
-                        <a href="#projects" onClick={() => setOpen(false)}>
-                            პროექტები
-                        </a>
+                            if (menu.route) {
+                                return (
+                                    <Link
+                                        key={menu.id}
+                                        href={href}
+                                        style={baseStyle}
+                                        onMouseEnter={(e)=>handleHover(e, hoverColor)}
+                                        onMouseLeave={(e)=>handleHover(e, linkColor)}
+                                        className="transition"
+                                    >
+                                        {menu.title}
+                                    </Link>
+                                );
+                            }
 
-                        <a href="#contact" onClick={() => setOpen(false)}>
-                            კონტაქტი
-                        </a>
+                            return (
+                                <a
+                                    key={menu.id}
+                                    href={href}
+                                    style={baseStyle}
+                                    onMouseEnter={(e)=>handleHover(e, hoverColor)}
+                                    onMouseLeave={(e)=>handleHover(e, linkColor)}
+                                    className="transition"
+                                >
+                                    {menu.title}
+                                </a>
+                            );
 
-                        <a
-                            href="#contact"
-                            className="mt-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-center"
-                        >
-                            დაგვიკავშირდი
-                        </a>
+                        })}
 
                     </nav>
 
-                </div>
-            )}
+                    {/* CTA */}
+                    <div className="hidden md:flex items-center gap-4">
 
-        </header>
+                        <a
+                            href={ctaLink}
+                            style={{
+                                backgroundColor: ctaBg,
+                                color: ctaTextColor,
+                                borderRadius: `${ctaRadius}px`
+                            }}
+                            onMouseEnter={(e)=>handleBgHover(e, ctaHover)}
+                            onMouseLeave={(e)=>handleBgHover(e, ctaBg)}
+                            className="px-5 py-2.5 font-medium transition shadow"
+                        >
+                            {ctaText}
+                        </a>
+
+                    </div>
+
+                    {/* MOBILE BUTTON */}
+                    <button
+                        onClick={() => setOpen(!open)}
+                        className="md:hidden text-slate-700"
+                    >
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-7 w-7"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+
+                            {open ? (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            ) : (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            )}
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+                {/* MOBILE NAV */}
+                {open && (
+
+                    <div
+                        className="md:hidden border-t border-white/30 backdrop-blur-lg"
+                        style={{ backgroundColor: headerStyle.backgroundColor }}
+                    >
+
+                        <nav className="flex flex-col gap-4 px-6 py-6 font-medium">
+
+                            {navigation.map(menu => {
+
+                                const href = resolveHref(menu);
+
+                                if (menu.route) {
+                                    return (
+                                        <Link
+                                            key={menu.id}
+                                            href={href}
+                                            onClick={() => setOpen(false)}
+                                            style={{ color: linkColor }}
+                                        >
+                                            {menu.title}
+                                        </Link>
+                                    );
+                                }
+
+                                return (
+                                    <a
+                                        key={menu.id}
+                                        href={href}
+                                        onClick={() => setOpen(false)}
+                                        style={{ color: linkColor }}
+                                    >
+                                        {menu.title}
+                                    </a>
+                                );
+
+                            })}
+
+                            {/* MOBILE CTA */}
+                            <a
+                                href={ctaLink}
+                                style={{
+                                    backgroundColor: ctaBg,
+                                    color: ctaTextColor,
+                                    borderRadius: `${ctaRadius}px`
+                                }}
+                                onMouseEnter={(e)=>handleBgHover(e, ctaHover)}
+                                onMouseLeave={(e)=>handleBgHover(e, ctaBg)}
+                                className="mt-2 px-5 py-2.5 text-center font-medium transition shadow"
+                            >
+                                {ctaText}
+                            </a>
+
+                        </nav>
+
+                    </div>
+
+                )}
+
+            </header>
+
+        </div>
     );
 }

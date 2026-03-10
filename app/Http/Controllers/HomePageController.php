@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarouselSlide;
+use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Project;
@@ -47,7 +48,6 @@ class HomePageController extends Controller
 {
     $slides = CarouselSlide::query()
         ->where('is_active', true)
-        ->orderBy('sort_order')
         ->get()
         ->append(['background_url','image_url']);
 
@@ -72,13 +72,15 @@ class HomePageController extends Controller
         ->with('features')
         ->first()
         ?->append(['image_url']);
+    $contact = Contact::first();
 
     return Inertia::render('Home', [
         'slides' => $slides,
         'products' => $products,
         'services' => $services,
         'projects' => $projects,
-        'about' => $about
+        'about' => $about,
+        'contact' => $contact
     ]);
 }
 }

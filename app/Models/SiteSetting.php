@@ -20,7 +20,6 @@ class SiteSetting extends Model implements HasMedia
         'about_header',
 'project_header',
         'contact_header',
-        'contact_left_title',
         'contact_form_title',
         'contact_service_title',
 

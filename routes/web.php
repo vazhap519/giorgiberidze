@@ -10,13 +10,6 @@ use Inertia\Inertia;
 Route::get('/', [HomePageController::class, 'index'])
     ->name('home');
 
-//Route::get('/about', fn () =>
-//Inertia::render('About')
-//)->name('about');
-//
-//Route::get('/projects', fn () =>
-//Inertia::render('Projects')
-//)->name('projects');
 
 Route::post('/contact-send', [ContactController::class, 'sendContact']);
 Route::post('/service-request-send', [ContactController::class, 'sendService']);

@@ -1,6 +1,15 @@
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
 import { Toaster } from 'react-hot-toast'
+import axios from "axios"
+
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+const token = document.querySelector('meta[name="csrf-token"]')
+
+if (token) {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+}
 
 createInertiaApp({
     resolve: name => {

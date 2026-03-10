@@ -1,7 +1,4 @@
 <?php
-
-namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
@@ -9,8 +6,6 @@ use App\Mail\ServiceRequestMail;
 
 class ContactController extends Controller
 {
-
-    /* ჩვეულებრივი კონტაქტის ფორმა */
 
     public function sendContact(Request $request)
     {
@@ -24,7 +19,7 @@ class ContactController extends Controller
 
         try {
 
-            Mail::to(config('mail.from.address'))
+            Mail::to('info@eyenet.ge')
                 ->send(new ContactFormMail($data));
 
             return response()->json([
@@ -44,8 +39,6 @@ class ContactController extends Controller
     }
 
 
-    /* სერვისის მოთხოვნა */
-
     public function sendService(Request $request)
     {
 
@@ -56,7 +49,8 @@ class ContactController extends Controller
             'phone' => ['required','regex:/^5\d{8}$/'],
             'message' => 'nullable|string'
         ]);
-        Mail::to(config('mail.from.address'))
+
+        Mail::to('info@eyenet.ge')
             ->send(new ServiceRequestMail($data));
 
         return response()->json([

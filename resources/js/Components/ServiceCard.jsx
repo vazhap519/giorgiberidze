@@ -1,163 +1,180 @@
-// import { useState } from "react"
-
-// export default function ServiceCard({ service }) {
-
-//     const [open, setOpen] = useState(false)
-
-//     return (
-//         <div className="
-//             bg-white
-//             rounded-2xl
-//             shadow-lg
-//             overflow-hidden
-//             transition-all
-//             duration-300
-//             w-full
-//             max-w-sm
-//         ">
-
-//             {service.image_url && (
-//                 <img
-//                     src={service.image_url}
-//                     alt={service.title}
-//                     className="w-full h-48 object-contain p-4 bg-gray-50"
-//                 />
-//             )}
-
-//             <div className="p-6 text-center">
-
-//                 <h3 className="text-xl font-semibold text-gray-900">
-//                     {service.title}
-//                 </h3>
-
-//                 <div
-//                     className={`
-//                         overflow-hidden
-//                         transition-all
-//                         duration-700
-//                         ease-in-out
-//                         ${open ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"}
-//                     `}
-//                 >
-//                     <p className="text-gray-600 leading-relaxed pb-6">
-//                         {service.description}
-//                     </p>
-//                 </div>
-
-//                 <button
-//                     onClick={() => setOpen(!open)}
-//                     className="
-//                         mt-5
-//                         px-6
-//                         py-2
-//                         border-2
-//                         border-blue-600
-//                         text-blue-600
-//                         rounded-full
-//                         hover:bg-blue-600
-//                         hover:text-white
-//                         transition
-//                     "
-//                 >
-//                     {open ? "დახურვა" : "შეიტყვე მეტი"}
-//                 </button>
-
-//             </div>
-
-//         </div>
-//     )
-// }
 import { useState } from "react"
 
 export default function ServiceCard({ service }) {
 
-    const [open, setOpen] = useState(false)
+    const [open,setOpen]=useState(false)
 
-    return (
-        <div className="
-            group
-            bg-white
-            rounded-2xl
-            shadow-md
-            hover:shadow-2xl
-            transition
-            duration-500
-            w-full
-            max-w-sm
-            overflow-hidden
-            hover:-translate-y-2
-        ">
+    /*
+    |--------------------------------------------------------------------------
+    | Styles from CMS
+    |--------------------------------------------------------------------------
+    */
+
+    const cardStyle={
+        background:service.card_bg || "#ffffff",
+        borderColor:service.card_border || "#e5e7eb",
+        borderRadius:`${service.card_radius || 16}px`
+    }
+
+    const imageStyle={
+        background:service.image_bg || "#f9fafb"
+    }
+
+    const titleStyle={
+        color:service.title_color || "#111827"
+    }
+
+    const descStyle={
+        color:service.description_color || "#4b5563"
+    }
+
+    const buttonStyle={
+        background:service.button_bg || "#2563eb",
+        color:service.button_text_color || "#ffffff"
+    }
+
+    const paddingStyle={
+        padding:`${service.card_padding || 24}px`
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hover Effects (CMS)
+    |--------------------------------------------------------------------------
+    */
+
+    const hoverEffects={
+        none:"",
+        lift:"hover:-translate-y-2",
+        scale:"hover:scale-105",
+        shadow:"hover:shadow-2xl"
+    }
+
+    const shadowClass={
+        md:"shadow-md",
+        lg:"shadow-lg",
+        xl:"shadow-xl",
+        "2xl":"shadow-2xl"
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hover Handlers
+    |--------------------------------------------------------------------------
+    */
+
+    const handleTitleHover=(e,color)=>{
+        if(color){
+            e.currentTarget.style.color=color
+        }
+    }
+
+    const handleButtonHover=(e,color)=>{
+        if(color){
+            e.currentTarget.style.background=color
+        }
+    }
+
+    return(
+
+        <div
+            style={cardStyle}
+            className={`
+group
+border
+transition
+duration-500
+w-full
+max-w-sm
+overflow-hidden
+${shadowClass[service.card_hover_shadow] || "shadow-md"}
+${hoverEffects[service.card_hover_effect] || ""}
+`}
+        >
 
             {/* IMAGE */}
+
             {service.image_url && (
-                <div className="bg-gray-50 flex items-center justify-center h-44 p-6">
+
+                <div
+                    style={imageStyle}
+                    className="flex items-center justify-center h-44 p-6"
+                >
 
                     <img
                         src={service.image_url}
                         alt={service.title}
                         className="
-                        h-24
-                        object-contain
-                        transition-transform
-                        duration-500
-                        group-hover:scale-110
-                        "
+h-24
+object-contain
+transition-transform
+duration-500
+group-hover:scale-110
+"
                     />
 
                 </div>
+
             )}
 
             {/* CONTENT */}
-            <div className="p-6 text-center">
 
-                <h3 className="
-                    text-lg
-                    font-semibold
-                    text-gray-900
-                    group-hover:text-blue-600
-                    transition
-                ">
+            <div style={paddingStyle} className="text-center">
+
+                <h3
+                    style={titleStyle}
+                    onMouseEnter={(e)=>handleTitleHover(e,service.title_hover_color)}
+                    onMouseLeave={(e)=>handleTitleHover(e,service.title_color)}
+                    className="text-lg font-semibold transition"
+                >
                     {service.title}
                 </h3>
 
                 {/* DESCRIPTION */}
+
                 <div
                     className={`
-                        overflow-hidden
-                        transition-all
-                        duration-500
-                        ${open ? "max-h-[300px] opacity-100 mt-4" : "max-h-0 opacity-0"}
-                    `}
+overflow-hidden
+transition-all
+duration-500
+${open ? "max-h-[300px] opacity-100 mt-4" : "max-h-0 opacity-0"}
+`}
                 >
-                    <p className="text-gray-600 text-sm leading-relaxed">
+
+                    <p style={descStyle} className="text-sm leading-relaxed">
                         {service.description}
                     </p>
+
                 </div>
 
                 {/* BUTTON */}
+
                 <button
-                    onClick={() => setOpen(!open)}
+                    onClick={()=>setOpen(!open)}
+                    style={buttonStyle}
+                    onMouseEnter={(e)=>handleButtonHover(e,service.button_hover_bg)}
+                    onMouseLeave={(e)=>handleButtonHover(e,service.button_bg)}
                     className="
-                        mt-6
-                        inline-flex
-                        items-center
-                        gap-2
-                        px-6
-                        py-2.5
-                        bg-blue-600
-                        text-white
-                        rounded-xl
-                        text-sm
-                        font-medium
-                        hover:bg-blue-700
-                        transition
-                    "
+mt-6
+inline-flex
+items-center
+gap-2
+px-6
+py-2.5
+rounded-xl
+text-sm
+font-medium
+transition
+"
                 >
-                    {open ? "დახურვა" : "შეიტყვე მეტი"}
+
+                    {open ? "დახურვა" : (service.read_more_text || "შეიტყვე მეტი")}
+
                 </button>
 
             </div>
 
         </div>
+
     )
 }

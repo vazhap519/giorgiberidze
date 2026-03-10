@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,19 +17,44 @@ class CarouselSlide extends Model implements HasMedia
         'title',
         'subtitle',
         'button_text',
-        'sort_order',
         'is_active',
-
+        'button_url',
+'button2_text',
+'button2_url',
+        'styles'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'styles' => 'array',
     ];
 
     protected $appends = [
         'background_url',
         'image_url'
     ];
+    protected function styles(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+
+                if (is_string($value)) {
+                    $value = json_decode($value, true);
+                }
+
+                if (!is_array($value)) {
+                    $value = [];
+                }
+
+                return array_merge([
+                    'button_border_width' => 0,
+                    'button_font_size' => 16,
+                    'button_opacity' => 100,
+                    'button_radius' => 12,
+                ], $value);
+            }
+        );
+    }
 
     /*
     |--------------------------------------------------------------------------

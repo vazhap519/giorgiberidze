@@ -16,11 +16,7 @@ class CarouselSlidesTable
 
                 ImageColumn::make('background_url')
                     ->label('Background'),
-
                 TextColumn::make('title'),
-
-                TextColumn::make('sort_order'),
-
                 TextColumn::make('is_active')
                     ->badge(),
 

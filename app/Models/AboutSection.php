@@ -14,9 +14,33 @@ class AboutSection extends Model implements HasMedia
     protected $fillable = [
         'title',
         'description',
+
         'experience_years',
         'experience_label',
-        'is_active'
+
+        'is_active',
+
+        'bg_color',
+        'title_color',
+        'description_color',
+
+        'card_bg',
+        'card_border',
+        'card_hover_color',
+
+        'experience_bg',
+        'experience_text_color',
+
+        'title_size',
+        'description_size',
+
+        'card_radius',
+
+        'blur',
+        'opacity',
+
+        'padding_top',
+        'padding_bottom'
     ];
 
     protected $casts = [

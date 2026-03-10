@@ -2,11 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Footer;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use App\Models\Seo;
 use App\Models\SiteSetting;
 use App\Models\Contact;
+use App\Models\Menu;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -48,6 +50,14 @@ class HandleInertiaRequests extends Middleware
 
             /*
             |--------------------------------------------------------------------------
+            | Navigation Menus
+            |--------------------------------------------------------------------------
+            */
+
+            'menus' => fn () => Menu::orderBy('order')->get(),
+'footer' => fn () => Footer::first(),
+            /*
+            |--------------------------------------------------------------------------
             | SEO
             |--------------------------------------------------------------------------
             */
@@ -71,8 +81,6 @@ class HandleInertiaRequests extends Middleware
         /*
         |--------------------------------------------------------------------------
         | 2. fallback for dynamic routes
-        | example:
-        | projects.show -> projects
         |--------------------------------------------------------------------------
         */
 

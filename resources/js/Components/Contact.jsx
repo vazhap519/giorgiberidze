@@ -1,25 +1,21 @@
-// import { usePage } from "@inertiajs/react"
 // import { useState } from "react"
 // import axios from "axios"
 // import toast from "react-hot-toast"
-
-// import ContactForService from "@/Components/Contact/ContactForService.jsx"
-// import EmailForm from "@/Components/Contact/EmailForm.jsx"
-// import LeftContactInfo from "@/Components/Contact/LeftContactInfo.jsx"
-
-// export default function Contact() {
-
-//     const { siteSettings, contact } = usePage().props
-
+//
+// import ContactForService from "@/Components/Contact/ContactForService"
+// import EmailForm from "@/Components/Contact/EmailForm"
+//
+// export default function Contact({ contact = {} }) {
+//
 //     const [loading, setLoading] = useState(false)
-
+//
 //     const [form, setForm] = useState({
 //         name: "",
 //         email: "",
 //         phone: "",
 //         message: ""
 //     })
-
+//
 //     const [serviceForm, setServiceForm] = useState({
 //         service: "",
 //         name: "",
@@ -27,66 +23,66 @@
 //         phone: "",
 //         message: ""
 //     })
-
-
+//
+//
 //     /* CONTACT FORM */
-
+//
 //     const sendContact = async (e) => {
-
+//
 //         e.preventDefault()
-
+//
 //         const toastId = toast.loading("მესიჯი იგზავნება...")
-
+//
 //         try {
-
+//
 //             setLoading(true)
-
+//
 //             await axios.post("/contact-send", form)
-
+//
 //             toast.success("შეტყობინება წარმატებით გაიგზავნა ✔", {
 //                 id: toastId
 //             })
-
+//
 //             setForm({
 //                 name: "",
 //                 email: "",
 //                 phone: "",
 //                 message: ""
 //             })
-
-//         } catch (error) {
-
+//
+//         } catch {
+//
 //             toast.error("მესიჯის გაგზავნა ვერ მოხერხდა ❌", {
 //                 id: toastId
 //             })
-
+//
 //         } finally {
-
+//
 //             setLoading(false)
-
+//
 //         }
-
+//
 //     }
-
-
+//
+//
 //     /* SERVICE REQUEST */
-
+//
 //     const sendService = async (e) => {
-
+//
 //         e.preventDefault()
-
+//
 //         const toastId = toast.loading("მოთხოვნა იგზავნება...")
-
+//
 //         try {
-
+//
 //             setLoading(true)
-
+//
 //             await axios.post("/service-request-send", serviceForm)
-
+//
 //             toast.success("სერვისის მოთხოვნა წარმატებით გაიგზავნა ✔", {
 //                 id: toastId
 //             })
-
+//
 //             setServiceForm({
 //                 service: "",
 //                 name: "",
@@ -94,76 +90,75 @@
 //                 phone: "",
 //                 message: ""
 //             })
-
-//         } catch (error) {
-
+//
+//         } catch {
+//
 //             toast.error("მოთხოვნის გაგზავნა ვერ მოხერხდა ❌", {
 //                 id: toastId
 //             })
-
+//
 //         } finally {
-
+//
 //             setLoading(false)
-
+//
 //         }
-
+//
 //     }
-
-
+//
+//
+//     const backgroundStyle = contact?.section_gradient_from
+//         ? `linear-gradient(135deg, ${contact.section_gradient_from}, ${contact.section_gradient_to})`
+//         : (contact?.section_bg ?? "#f8fafc")
+//
+//
 //     return (
-
-//         <section className="w-full bg-slate-50 py-20">
-
-//             <div className="max-w-[1600px] mx-auto px-6 lg:px-20">
-
-//                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
-
-//                     {/* LEFT CONTACT INFO */}
-
-//                     <LeftContactInfo
-//                         siteSettings={siteSettings}
-//                         contact={contact}
-//                     />
-//                     {/* EMAIL FORM */}
-
+//
+//         <section
+//             style={{
+//                 background: backgroundStyle,
+//                 paddingTop: `${contact?.section_padding ?? 96}px`,
+//                 paddingBottom: `${contact?.section_padding ?? 96}px`,
+//                 opacity: Number(contact?.section_opacity ?? 1)
+//             }}
+//             className="relative w-full"
+//         >
+//
+//             <div className="max-w-7xl mx-auto px-6">
+//
+//                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+//
 //                     <EmailForm
 //                         form={form}
 //                         setForm={setForm}
 //                         sendContact={sendContact}
 //                         loading={loading}
-//                         siteSettings={siteSettings}
+//                         contact={contact}
 //                     />
-
-//                     {/* SERVICE REQUEST */}
-
+//
 //                     <ContactForService
 //                         serviceForm={serviceForm}
 //                         setServiceForm={setServiceForm}
 //                         sendService={sendService}
 //                         loading={loading}
-//                         siteSettings={siteSettings}
 //                         contact={contact}
 //                     />
-
+//
 //                 </div>
-
+//
 //             </div>
-
+//
 //         </section>
+//
 //     )
 // }
-import { usePage } from "@inertiajs/react"
 import { useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
 
-import ContactForService from "@/Components/Contact/ContactForService.jsx"
-import EmailForm from "@/Components/Contact/EmailForm.jsx"
-import LeftContactInfo from "@/Components/Contact/LeftContactInfo.jsx"
+import ContactForService from "@/Components/Contact/ContactForService"
+import EmailForm from "@/Components/Contact/EmailForm"
 
-export default function Contact() {
-
-    const { siteSettings, contact } = usePage().props
+export default function Contact({ contact = {} }) {
 
     const [loading, setLoading] = useState(false)
 
@@ -181,9 +176,6 @@ export default function Contact() {
         phone: "",
         message: ""
     })
-
-
-    /* CONTACT FORM */
 
     const sendContact = async (e) => {
 
@@ -208,7 +200,7 @@ export default function Contact() {
                 message: ""
             })
 
-        } catch (error) {
+        } catch {
 
             toast.error("მესიჯის გაგზავნა ვერ მოხერხდა ❌", {
                 id: toastId
@@ -222,8 +214,6 @@ export default function Contact() {
 
     }
 
-
-    /* SERVICE REQUEST */
 
     const sendService = async (e) => {
 
@@ -249,7 +239,7 @@ export default function Contact() {
                 message: ""
             })
 
-        } catch (error) {
+        } catch {
 
             toast.error("მოთხოვნის გაგზავნა ვერ მოხერხდა ❌", {
                 id: toastId
@@ -263,87 +253,48 @@ export default function Contact() {
 
     }
 
+    const backgroundStyle =
+        contact?.section_gradient_from && contact?.section_gradient_to
+            ? `linear-gradient(135deg, ${contact.section_gradient_from}, ${contact.section_gradient_to})`
+            : (contact?.section_bg ?? "#f8fafc")
 
     return (
 
-        <section className="
-            relative
-            w-full
-            py-24
-            bg-gradient-to-b
-            from-slate-50
-            to-white
-        ">
+        <section
+            style={{
+                background: backgroundStyle,
+                paddingTop: `${contact?.section_padding ?? 96}px`,
+                paddingBottom: `${contact?.section_padding ?? 96}px`,
+                opacity: (contact?.section_opacity ?? 100) / 100
+            }}
+            className="relative w-full"
+        >
 
-            {/* decorative background */}
+            <div className="max-w-7xl mx-auto px-6">
 
-            <div className="
-                absolute
-                top-0
-                left-0
-                w-full
-                h-full
-                opacity-20
-                pointer-events-none
-                bg-[radial-gradient(circle_at_30%_20%,rgba(37,99,235,0.25),transparent_40%),radial-gradient(circle_at_80%_60%,rgba(37,99,235,0.2),transparent_45%)]
-            " />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
-            <div className="relative max-w-7xl mx-auto px-6">
+                    <EmailForm
+                        form={form}
+                        setForm={setForm}
+                        sendContact={sendContact}
+                        loading={loading}
+                        contact={contact}
+                    />
 
-                {/* GRID */}
-
-                <div className="
-                    grid
-                    grid-cols-1
-                    lg:grid-cols-3
-                    gap-10
-                    items-start
-                ">
-
-                    {/* LEFT CONTACT INFO */}
-
-                    <div className="lg:pr-6">
-
-                        <LeftContactInfo
-                            siteSettings={siteSettings}
-                            contact={contact}
-                        />
-
-                    </div>
-
-                    {/* EMAIL FORM */}
-
-                    <div className="lg:scale-[1.02]">
-
-                        <EmailForm
-                            form={form}
-                            setForm={setForm}
-                            sendContact={sendContact}
-                            loading={loading}
-                            siteSettings={siteSettings}
-                        />
-
-                    </div>
-
-                    {/* SERVICE REQUEST */}
-
-                    <div>
-
-                        <ContactForService
-                            serviceForm={serviceForm}
-                            setServiceForm={setServiceForm}
-                            sendService={sendService}
-                            loading={loading}
-                            siteSettings={siteSettings}
-                            contact={contact}
-                        />
-
-                    </div>
+                    <ContactForService
+                        serviceForm={serviceForm}
+                        setServiceForm={setServiceForm}
+                        sendService={sendService}
+                        loading={loading}
+                        contact={contact}
+                    />
 
                 </div>
 
             </div>
 
         </section>
+
     )
 }

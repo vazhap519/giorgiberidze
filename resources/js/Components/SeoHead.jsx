@@ -6,41 +6,85 @@ export default function SeoHead({ seo = {}, pageTitle = "" }) {
 
     const siteName = siteSettings?.site_name || "Website";
 
-    const title = seo?.meta_title
-        ? `${seo.meta_title} | ${siteName}`
-        : pageTitle
-            ? `${pageTitle} | ${siteName}`
-            : siteName;
+    /*
+    |--------------------------------------------------------------------------
+    | Title
+    |--------------------------------------------------------------------------
+    */
+
+    const title =
+        seo?.meta_title
+            ? `${seo.meta_title} | ${siteName}`
+            : pageTitle
+                ? `${pageTitle} | ${siteName}`
+                : siteName;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Description
+    |--------------------------------------------------------------------------
+    */
 
     const description = seo?.meta_description || "";
 
-    // canonical fallback
+    /*
+    |--------------------------------------------------------------------------
+    | Canonical
+    |--------------------------------------------------------------------------
+    */
+
     const canonical =
         seo?.canonical_url ??
         (typeof window !== "undefined"
             ? window.location.origin + window.location.pathname
             : "");
 
+    /*
+    |--------------------------------------------------------------------------
+    | Image
+    |--------------------------------------------------------------------------
+    */
+
     const image =
         seo?.og_image_url ??
         siteSettings?.logo_url ??
         "";
 
-    const robots = seo?.indexable === false
-        ? "noindex,nofollow"
-        : "index,follow";
+    /*
+    |--------------------------------------------------------------------------
+    | Robots
+    |--------------------------------------------------------------------------
+    */
+
+    const robots =
+        seo?.robots ??
+        (seo?.indexable === false
+            ? "noindex,nofollow"
+            : "index,follow");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Twitter Card
+    |--------------------------------------------------------------------------
+    */
+
+    const twitterCard = seo?.twitter_card || "summary_large_image";
 
     return (
         <Head>
 
+            {/* Title */}
             <title>{title}</title>
 
+            {/* Meta Description */}
             {description && (
                 <meta name="description" content={description} />
             )}
 
+            {/* Robots */}
             <meta name="robots" content={robots} />
 
+            {/* Canonical */}
             {canonical && (
                 <link rel="canonical" href={canonical} />
             )}
@@ -56,10 +100,26 @@ export default function SeoHead({ seo = {}, pageTitle = "" }) {
 
             {/* Twitter */}
 
-            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:card" content={twitterCard} />
             <meta name="twitter:title" content={seo?.twitter_title || title} />
             <meta name="twitter:description" content={seo?.twitter_description || description} />
             <meta name="twitter:image" content={image} />
+
+            {/* Optional schema (future use) */}
+
+            {seo?.schema_type === "website" && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "WebSite",
+                            "name": siteName,
+                            "url": canonical,
+                        }),
+                    }}
+                />
+            )}
 
         </Head>
     );

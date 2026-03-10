@@ -1,36 +1,42 @@
 <?php
 
-namespace App\Filament\Resources\Roles\Tables;
+namespace App\Filament\Resources\Menus\Tables;
 
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
-class RolesTable
+class MenusTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
 
-                TextColumn::make('id')
+                TextColumn::make('title')
+                    ->label('Title')
+                    ->searchable(),
+
+                TextColumn::make('route')
+                    ->label('Route')
+                    ->placeholder('-'),
+
+                TextColumn::make('section')
+                    ->label('Scroll Section')
+                    ->placeholder('-'),
+
+                TextColumn::make('order')
+                    ->label('Order')
                     ->sortable(),
-
-                TextColumn::make('name')
-                    ->searchable()
-                    ->label('Role'),
-
-                TextColumn::make('permissions_count')
-                    ->counts('permissions')
-                    ->label('Permissions'),
 
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label('Created'),
 
             ])
+            ->defaultSort('order')
             ->filters([
                 //
             ])

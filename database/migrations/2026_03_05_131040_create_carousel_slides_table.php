@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('carousel_slides', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->string('button_text')->nullable();
-            $table->integer('sort_order')->default(0);
+            $table->string('title');
+            $table->string('subtitle');
+            $table->string('button_text');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

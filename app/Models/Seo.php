@@ -17,10 +17,17 @@ class Seo extends Model implements HasMedia
         'meta_title',
         'meta_description',
         'canonical_url',
+
         'og_title',
         'og_description',
+
         'twitter_title',
         'twitter_description',
+        'twitter_card',
+
+        'robots',
+        'schema_type',
+
         'indexable',
     ];
 
@@ -31,7 +38,17 @@ class Seo extends Model implements HasMedia
     protected $appends = [
         'og_image_url',
     ];
+    public function getRobotsAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
 
+        return $this->indexable ? 'index,follow' : 'noindex,nofollow';
+    }public function getTwitterCardAttribute($value)
+{
+    return $value ?: 'summary_large_image';
+}
     /*
     |--------------------------------------------------------------------------
     | Media

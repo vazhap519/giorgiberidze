@@ -17,7 +17,35 @@ return new class extends Migration
             $table->string('experience_label')->nullable();
 
             $table->boolean('is_active')->default(true);
-          
+            $table->string('bg_color')->default('#ffffff');
+
+            $table->string('title_color')->default('#111827');
+
+            $table->string('description_color')->default('#4b5563');
+
+            $table->string('card_bg')->default('#ffffff');
+
+            $table->string('card_border')->default('#e5e7eb');
+
+            $table->string('card_hover_color')->default('#2563eb');
+
+            $table->string('experience_bg')->default('#ffffff');
+
+            $table->string('experience_text_color')->default('#2563eb');
+
+            $table->integer('title_size')->default(48);
+
+            $table->integer('description_size')->default(18);
+
+            $table->integer('card_radius')->default(16);
+
+            $table->integer('blur')->default(0);
+
+            $table->float('opacity')->default(1);
+
+            $table->integer('padding_top')->default(120);
+
+            $table->integer('padding_bottom')->default(120);
             $table->timestamps();
         });
     }
