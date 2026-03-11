@@ -10,7 +10,7 @@ class Footer extends Model
     protected $fillable = [
 
         'footer_description',
-
+        'footer_contact_info',
         'footer_navigation_title',
         'footer_contact_title',
         'footer_social_title',
@@ -45,13 +45,17 @@ class Footer extends Model
         'footer_z_index',
 
         'footer_padding_top',
-        'footer_padding_bottom'
+        'footer_padding_bottom',
+        'contact_items',
+'footer_contact_styles'
 
     ];
 
     protected $casts = [
 
-        'footer_social_links' => 'array'
+        'footer_social_links' => 'array',
+          'contact_items' => 'array',
+    'footer_contact_styles' => 'array',
 
     ];
 

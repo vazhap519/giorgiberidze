@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Projects\Schemas;
 
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Section;
@@ -12,6 +13,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Illuminate\Support\Str;
 
 class ProjectForm
 {
@@ -32,7 +34,16 @@ class ProjectForm
                     TextInput::make('title')
                         ->label('პროექტის სათაური')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('slug', Str::slug($state));
+                        }),
+
+                    TextInput::make('slug')
+                        ->label('Slug')
+                        ->required()
+                        ->unique(ignoreRecord: true),
 
                     TextInput::make('project_overview_title')
                         ->label('პროექტის მიმოხილვის სათაური')

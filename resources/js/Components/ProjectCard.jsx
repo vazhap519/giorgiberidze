@@ -22,7 +22,7 @@ export default function ProjectCard({ project }) {
 
     return (
 
-        <Link href={route('projects.show', project.id)}>
+        <Link href={route('projects.show', project.slug)}>
 
             <div
                 style={cardStyle}

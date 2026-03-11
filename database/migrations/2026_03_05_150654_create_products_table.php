@@ -19,7 +19,7 @@ return new class extends Migration
             */
 
             $table->string('title');
-
+            $table->string('slug')->unique()->after('title');
             $table->text('description')->nullable();
 
             // Repeater features

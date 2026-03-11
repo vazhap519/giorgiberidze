@@ -153,7 +153,7 @@ export default function ContactForService({
                 borderRadius: contact?.card_radius ?? 16,
                 opacity:(contact?.card_opacity ?? 100)/100
             }}
-            className={`border p-8 ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
+            className={`border p-8 min-h-[520px] cursor-pointer ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
         >
 
             <h3
@@ -236,7 +236,7 @@ export default function ContactForService({
                         borderRadius:contact?.button_radius,
                         opacity:(contact?.button_opacity ?? 100)/100
                     }}
-                    className={`w-full py-3 ${shadowMap[contact?.button_shadow] ?? "shadow-md"}`}
+                    className={`w-full py-3  ${shadowMap[contact?.button_shadow] ?? "shadow-md"}`}
                 >
                     {loading ? "იგზავნება..." : contact?.service_form_button}
                 </button>

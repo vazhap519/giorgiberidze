@@ -8,28 +8,19 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+use App\Models\Filter;
+
 class Product extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
     protected $fillable = [
 
-        /*
-        |--------------------------------------------------------------------------
-        | Content
-        |--------------------------------------------------------------------------
-        */
-
         'title',
         'description',
         'features',
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Card Styles
-        |--------------------------------------------------------------------------
-        */
+        'specs',
+        'slug',
 
         'card_bg',
         'card_border',
@@ -37,42 +28,14 @@ class Product extends Model implements HasMedia
         'card_shadow',
         'card_hover_effect',
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Image Styles
-        |--------------------------------------------------------------------------
-        */
-
         'image_bg',
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Title Typography
-        |--------------------------------------------------------------------------
-        */
 
         'title_color',
         'title_size',
         'title_weight',
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Description Typography
-        |--------------------------------------------------------------------------
-        */
-
         'description_color',
         'description_size',
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Overlay Styles
-        |--------------------------------------------------------------------------
-        */
 
         'overlay_bg_from',
         'overlay_bg_via',
@@ -81,28 +44,40 @@ class Product extends Model implements HasMedia
         'overlay_title_size',
         'overlay_title_weight',
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | Feature Styles
-        |--------------------------------------------------------------------------
-        */
-
         'feature_icon_color',
         'feature_text_color',
         'feature_icon_size',
         'feature_text_size',
 
+        'download_btn_bg',
+        'download_btn_hover',
+        'download_btn_text',
+        'download_btn_radius',
+        'download_btn_size',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Casts
+    |--------------------------------------------------------------------------
+    */
 
     protected $casts = [
         'features' => 'array',
+        'specs' => 'array',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Appended attributes
+    |--------------------------------------------------------------------------
+    */
 
     protected $appends = [
-        'image_url'
+        'image_url',
+        'gallery',
+        'downloads'
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -114,8 +89,11 @@ class Product extends Model implements HasMedia
     {
         $this->addMediaCollection('image')
             ->singleFile();
-    }
 
+        $this->addMediaCollection('gallery');
+
+        $this->addMediaCollection('downloads');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -131,10 +109,9 @@ class Product extends Model implements HasMedia
             ->nonQueued();
     }
 
-
     /*
     |--------------------------------------------------------------------------
-    | Accessor
+    | Main Image URL
     |--------------------------------------------------------------------------
     */
 
@@ -143,10 +120,75 @@ class Product extends Model implements HasMedia
         return $this->getFirstMediaUrl('image', 'webp');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Gallery Images
+    |--------------------------------------------------------------------------
+    */
+
+    public function getGalleryAttribute()
+    {
+        return $this->getMedia('gallery')->map(fn ($media) => [
+            'url' => $media->getUrl(),
+        ]);
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | Feature List (Table display helper)
+    | Download Files
+    |--------------------------------------------------------------------------
+    */
+
+    public function getDownloadsAttribute()
+    {
+        return $this->getMedia('downloads')->map(fn ($media) => [
+            'name' => $media->name,
+            'url' => $media->getUrl(),
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Product Filters
+    |--------------------------------------------------------------------------
+    */
+
+    public function filters()
+    {
+        if (!$this->features) {
+            return collect();
+        }
+
+        $slugs = collect($this->features)
+            ->pluck('filter')
+            ->filter()
+            ->unique()
+            ->values();
+
+        return Filter::whereIn('slug', $slugs)->get();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get Feature Value
+    |--------------------------------------------------------------------------
+    */
+
+    public function getFeatureValue($slug)
+    {
+        if (!$this->features) {
+            return null;
+        }
+
+        $feature = collect($this->features)
+            ->firstWhere('filter', $slug);
+
+        return $feature['value'] ?? null;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Feature List
     |--------------------------------------------------------------------------
     */
 
@@ -157,7 +199,7 @@ class Product extends Model implements HasMedia
         }
 
         return collect($this->features)
-            ->pluck('feature')
+            ->pluck('value')
             ->filter()
             ->implode(', ');
     }

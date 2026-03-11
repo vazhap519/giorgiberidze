@@ -17,7 +17,7 @@ class Project extends Model implements HasMedia
         'description',
         'project_overview_title',
         'project_gallery_title',
-
+        'slug',
         'is_active',
 
         /*
@@ -71,7 +71,10 @@ class Project extends Model implements HasMedia
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     protected $appends = [
         'cover_image',
         'images',

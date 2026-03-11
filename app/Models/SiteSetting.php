@@ -14,26 +14,40 @@ class SiteSetting extends Model implements HasMedia
     protected $table = 'site_settings';
 
     protected $fillable = [
+
         'site_name',
+
         'products_title',
         'services_header',
         'about_header',
-'project_header',
+        'project_header',
+
         'contact_header',
         'contact_form_title',
         'contact_service_title',
 
         'contact_form_button',
         'contact_service_button',
- 'contact_form_button',
-    'contact_service_button', // ← აქ აკლდა მძიმე
 
-    'footer_description',
-    'footer_navigation_title',
-    'footer_contact_title',
-    'footer_social_title',
-    'footer_copyright'
+        'footer_description',
+        'footer_navigation_title',
+        'footer_contact_title',
+        'footer_social_title',
+        'footer_copyright',
 
+        /* Product page texts */
+
+        'products_page_title',
+        'filter_title',
+        'clear_filters_text',
+
+        /* Styles */
+
+        'accent_color',
+        'dark_color',
+'product_overview',
+'product_Features',
+'Downloads_Features',
     ];
 
     protected $appends = [
@@ -41,18 +55,24 @@ class SiteSetting extends Model implements HasMedia
         'logo_url',
     ];
 
-    /**
-     * Media collections
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Media Collections
+    |--------------------------------------------------------------------------
+    */
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('favicon')->singleFile();
         $this->addMediaCollection('logo')->singleFile();
     }
 
-    /**
-     * WebP conversion
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Media Conversions
+    |--------------------------------------------------------------------------
+    */
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('webp')
@@ -61,9 +81,12 @@ class SiteSetting extends Model implements HasMedia
             ->nonQueued();
     }
 
-    /**
-     * Accessors
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    */
+
     public function getFaviconUrlAttribute(): ?string
     {
         $media = $this->getFirstMedia('favicon');
@@ -82,9 +105,12 @@ class SiteSetting extends Model implements HasMedia
             : $media?->getUrl();
     }
 
-    /**
-     * Clear cache
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Clear cache
+    |--------------------------------------------------------------------------
+    */
+
     protected static function booted(): void
     {
         static::saved(fn () => cache()->forget('site_settings'));

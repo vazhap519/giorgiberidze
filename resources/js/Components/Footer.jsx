@@ -122,7 +122,6 @@ export default function Footer() {
 
                     </div>
 
-
                     {/* CONTACT */}
 
                     <div>
@@ -134,9 +133,16 @@ export default function Footer() {
                             {footer?.footer_contact_title}
                         </h4>
 
-                        <div className="space-y-4 text-sm">
+                        <div
+                            className="text-sm"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: footer?.footer_contact_styles?.item_spacing || 16
+                            }}
+                        >
 
-                            {contact?.contact_items?.map((item, index) => {
+                            {footer?.contact_items?.map((item, index) => {
 
                                 let Icon
 
@@ -146,15 +152,38 @@ export default function Footer() {
 
                                 return (
 
-                                    <div key={index} className="flex items-start gap-3">
+                                    <div
+                                        key={index}
+                                        className="flex items-start"
+                                        style={{
+                                            gap: footer?.footer_contact_styles?.gap || 12,
+                                            opacity: footer?.footer_contact_styles?.opacity || 0.8
+                                        }}
+                                    >
 
                                         {Icon && (
-                                            <Icon className="w-4 h-4 text-blue-500 mt-[2px]" />
+
+                                            <Icon
+                                                style={{
+                                                    width: footer?.footer_contact_styles?.icon_size || 16,
+                                                    height: footer?.footer_contact_styles?.icon_size || 16,
+                                                    color: footer?.footer_contact_styles?.icon_color,
+                                                    background: footer?.footer_contact_styles?.icon_background,
+                                                    borderRadius: footer?.footer_contact_styles?.icon_border_radius
+                                                }}
+                                                className="mt-[2px] flex-shrink-0"
+                                            />
+
                                         )}
 
-                                        <span className="opacity-80">
-                                            {item.value}
-                                        </span>
+                                        <span
+                                            style={{
+                                                color: footer?.footer_contact_styles?.text_color,
+                                                fontSize: footer?.footer_contact_styles?.text_size
+                                            }}
+                                        >
+                        {item.value}
+                    </span>
 
                                     </div>
 
@@ -165,7 +194,6 @@ export default function Footer() {
                         </div>
 
                     </div>
-
 
                     {/* NAVIGATION */}
 

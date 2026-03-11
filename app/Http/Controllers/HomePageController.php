@@ -53,17 +53,20 @@ class HomePageController extends Controller
 
     $products = Product::query()
         ->latest()
+        ->take(8)
         ->get()
         ->append(['image_url']);
 
     $services = Service::query()
         ->latest()
+        ->take(8)
         ->get()
         ->append(['image_url']);
 
     $projects = Project::query()
         ->where('is_active', true)
         ->latest()
+        ->take(8)
         ->get()
         ->append(['cover_image']);
 
