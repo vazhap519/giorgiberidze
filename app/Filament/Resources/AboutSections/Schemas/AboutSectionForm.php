@@ -19,7 +19,7 @@ class AboutSectionForm
     {
         return $schema->components([
 
-            Section::make('About Section')
+            Section::make('About სექცია')
                 ->schema([
 
                     TextInput::make('title')
@@ -28,7 +28,8 @@ class AboutSectionForm
 
                     Textarea::make('description')
                         ->label('აღწერა')
-                        ->rows(4),
+                        ->rows(4)
+                        ->required(),
 
                     TextInput::make('experience_years')
                         ->label('გამოცდილების წლები'),
@@ -53,55 +54,66 @@ class AboutSectionForm
 
             /*
             |--------------------------------
-            | Features
+            | მახასიათებლები
             |--------------------------------
             */
 
             Repeater::make('features')
                 ->relationship()
-                ->label('Features')
+                ->label('მახასიათებლები')
                 ->schema([
 
                     TextInput::make('title')
-                        ->label('Feature Title'),
+                        ->label('სათაური')
+                        ->required(),
 
                     Textarea::make('description')
-                        ->label('Feature Description'),
+                        ->label('აღწერა')
+                        ->required(),
 
                     ColorPicker::make('card_bg')
-                        ->label('Card Background'),
+                        ->label('ბარათის ფონი')
+                        ->default('#ffffff'),
 
                     ColorPicker::make('card_border')
-                        ->label('Card Border'),
+                        ->label('ბარათის საზღვარი')
+                        ->default('#e5e7eb'),
 
                     ColorPicker::make('title_color')
-                        ->label('Title Color'),
+                        ->label('სათაურის ფერი')
+                        ->default('#111827'),
 
                     ColorPicker::make('description_color')
-                        ->label('Description Color'),
+                        ->label('აღწერის ფერი')
+                        ->default('#4b5563'),
 
                     Select::make('card_radius')
+                        ->label('კუთხის მომრგვალება')
                         ->options([
-                            12=>'12px',
-                            16=>'16px',
-                            20=>'20px',
-                            24=>'24px'
+                            12 => '12px',
+                            16 => '16px',
+                            20 => '20px',
+                            24 => '24px'
                         ])
-                        ->label('Border Radius'),
+                        ->default(16),
 
                     Select::make('blur')
+                        ->label('ბლური')
                         ->options([
-                            0=>'0px',
-                            10=>'10px',
-                            20=>'20px'
-                        ]),
+                            0 => '0px',
+                            10 => '10px',
+                            20 => '20px'
+                        ])
+                        ->default(0),
 
                     Select::make('opacity')
+                        ->label('გამჭვირვალობა')
                         ->options([
-                            1=>'1',
-                            0.9=>'0.9',
-                            0.8=>'0.8'
+                            '1' => '1',
+                            '0.9' => '0.9',
+                            '0.8' => '0.8'
                         ])
+                        ->default('1')
 
                 ])
                 ->columns(2)
@@ -109,73 +121,110 @@ class AboutSectionForm
 
             /*
             |--------------------------------
-            | Section Styles
+            | სექციის სტილები
             |--------------------------------
             */
 
-            Section::make('Section Styles')
+            Section::make('სექციის სტილები')
                 ->schema([
 
-                    ColorPicker::make('bg_color'),
+                    ColorPicker::make('bg_color')
+                        ->label('ფონის ფერი')
+                        ->default('#ffffff'),
 
-                    ColorPicker::make('title_color'),
+                    ColorPicker::make('title_color')
+                        ->label('სათაურის ფერი')
+                        ->default('#111827'),
 
-                    ColorPicker::make('description_color'),
+                    ColorPicker::make('description_color')
+                        ->label('აღწერის ფერი')
+                        ->default('#4b5563'),
 
-                    ColorPicker::make('card_bg'),
+                    ColorPicker::make('card_bg')
+                        ->label('ბარათის ფონი')
+                        ->default('#ffffff'),
 
-                    ColorPicker::make('card_border'),
+                    ColorPicker::make('card_border')
+                        ->label('ბარათის საზღვარი')
+                        ->default('#e5e7eb'),
 
-                    ColorPicker::make('card_hover_color'),
+                    ColorPicker::make('card_hover_color')
+                        ->label('ბარათის Hover ფერი')
+                        ->default('#2563eb'),
 
-                    ColorPicker::make('experience_bg'),
+                    ColorPicker::make('experience_bg')
+                        ->label('გამოცდილების ფონი')
+                        ->default('#ffffff'),
 
-                    ColorPicker::make('experience_text_color'),
+                    ColorPicker::make('experience_text_color')
+                        ->label('გამოცდილების ტექსტის ფერი')
+                        ->default('#2563eb'),
 
-                    Select::make('title_size')->options([
-                        32=>'32px',
-                        40=>'40px',
-                        48=>'48px',
-                        56=>'56px'
-                    ]),
+                    Select::make('title_size')
+                        ->label('სათაურის ზომა')
+                        ->options([
+                            32 => '32px',
+                            40 => '40px',
+                            48 => '48px',
+                            56 => '56px'
+                        ])
+                        ->default(48),
 
-                    Select::make('description_size')->options([
-                        14=>'14px',
-                        16=>'16px',
-                        18=>'18px',
-                        20=>'20px'
-                    ]),
+                    Select::make('description_size')
+                        ->label('აღწერის ზომა')
+                        ->options([
+                            14 => '14px',
+                            16 => '16px',
+                            18 => '18px',
+                            20 => '20px'
+                        ])
+                        ->default(18),
 
-                    Select::make('card_radius')->options([
-                        12=>'12px',
-                        16=>'16px',
-                        20=>'20px',
-                        24=>'24px'
-                    ]),
+                    Select::make('card_radius')
+                        ->label('ბარათის კუთხის მომრგვალება')
+                        ->options([
+                            12 => '12px',
+                            16 => '16px',
+                            20 => '20px',
+                            24 => '24px'
+                        ])
+                        ->default(16),
 
-                    Select::make('blur')->options([
-                        0=>'0px',
-                        10=>'10px',
-                        20=>'20px'
-                    ]),
+                    Select::make('blur')
+                        ->label('ბლური')
+                        ->options([
+                            0 => '0px',
+                            10 => '10px',
+                            20 => '20px'
+                        ])
+                        ->default(0),
 
-                    Select::make('opacity')->options([
-                        1=>'1',
-                        0.9=>'0.9',
-                        0.8=>'0.8'
-                    ]),
+                    Select::make('opacity')
+                        ->label('გამჭვირვალობა')
+                        ->options([
+                            '1' => '1',
+                            '0.9' => '0.9',
+                            '0.8' => '0.8'
+                        ])
+                        ->default('1'),
 
-                    Select::make('padding_top')->options([
-                        80=>'80px',
-                        120=>'120px',
-                        160=>'160px'
-                    ]),
+                    Select::make('padding_top')
+                        ->label('ზედა დაშორება')
+                        ->options([
+                            80 => '80px',
+                            120 => '120px',
+                            160 => '160px'
+                        ])
+                        ->default(120),
 
-                    Select::make('padding_bottom')->options([
-                        80=>'80px',
-                        120=>'120px',
-                        160=>'160px'
-                    ])
+                    Select::make('padding_bottom')
+                        ->label('ქვედა დაშორება')
+                        ->options([
+                            80 => '80px',
+                            120 => '120px',
+                            160 => '160px'
+                        ])
+                        ->default(120)
 
                 ])
                 ->columns(2)

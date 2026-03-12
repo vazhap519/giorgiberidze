@@ -33,7 +33,8 @@ class CarouselSlideForm
                             ->required(),
 
                         Textarea::make('subtitle')
-                            ->label('ქვესათაური'),
+                            ->label('ქვესათაური')
+                            ->required(),
 
                         TextInput::make('button_text')
                             ->label('პირველი ღილაკის ტექსტი')

@@ -1,89 +1,319 @@
+// import React, { useState } from "react"
+// import { usePage } from "@inertiajs/react"
+// import SeoHead from "../Components/SeoHead.jsx"
+// import HeroCarousel from "@/Components/HeroCarousel.jsx"
+// import ProductCard from "@/Components/ProductCard.jsx"
+// import SectionTitle from "@/Components/SectionTitle"
+// import ServiceCard from "@/Components/ServiceCard.jsx"
+// import Header from "@/Components/Header.jsx";
+// import ProjectCard from "@/Components/ProjectCard.jsx";
+// import AboutUs from "../Components/AboutUs.jsx"
+// import Footer from "@/Components/Footer.jsx"
+// import Contact from '../Components/Contact.jsx'
+// import { Link } from "@inertiajs/react"
+// export default function Home() {
+//
+//     const { seo, slides, products, siteSettings, services, projects, about, contact } = usePage().props
+//
+//
+// const [visibleServicesCount, setVisibleServicesCount] = useState(3)
+//
+//
+// const loadMoreServices = () => setVisibleServicesCount(prev => prev + 3)
+//
+//
+// const visibleServices = services.slice(0, visibleServicesCount)
+//
+// return (
+//
+// <div className="bg-white overflow-hidden">
+//
+// <SeoHead seo={seo} pageTitle="Home" />
+//
+// <Header siteSettings={siteSettings} />
+//
+// {/* HERO */}
+//
+// <HeroCarousel slides={slides} />
+//
+//
+//
+// {/* SERVICES */}
+// {services.length > 0 && (
+//
+// <section
+// id="services"
+// className="
+// relative
+// py-28
+// bg-gradient-to-b
+// from-white
+// to-slate-50
+// ">
+//
+// <div className="max-w-7xl mx-auto px-6">
+//
+// <SectionTitle title={siteSettings?.services_header} />
+//
+// <div className="
+// grid
+// grid-cols-1
+// sm:grid-cols-2
+// lg:grid-cols-3
+// gap-10
+// mt-16
+// ">
+//
+// {visibleServices.map((service) => (
+//
+// <ServiceCard
+// key={service.id}
+// service={service}
+// />
+//
+// ))}
+//
+// </div>
+//
+// {visibleServicesCount < services.length && (
+//
+// <div className="flex justify-center mt-16">
+//
+// <button
+// onClick={loadMoreServices}
+// className="
+// px-8
+// py-3
+// rounded-xl
+// bg-blue-600
+// text-white
+// font-semibold
+// shadow-lg
+// hover:bg-blue-700
+// hover:scale-[1.03]
+// transition
+// "
+// >
+// მეტი სერვისი
+// </button>
+//
+// </div>
+//
+// )}
+//
+// </div>
+//
+// </section>
+//
+// )}
+//
+// {/* PRODUCTS */}
+// {products.length > 0 && (
+//
+// <section
+// id="products"
+// className="
+// relative
+// py-28
+// bg-white
+// ">
+//
+// <div className="max-w-7xl mx-auto px-6">
+//
+//     <Link href="/products">
+//         <SectionTitle title={siteSettings?.products_title} />
+//     </Link>
+// <div className="
+// grid
+// grid-cols-1
+// sm:grid-cols-2
+// lg:grid-cols-3
+// xl:grid-cols-4
+// gap-10
+// mt-16
+// ">
+//
+// {products.map((product) => (
+//
+// <ProductCard
+// key={product.id}
+// product={product}
+// />
+//
+// ))}
+//
+// </div>
+//
+//
+// </div>
+//
+// </section>
+//
+// )}
+//
+//
+//
+//     {/* PROJECTS */}
+//
+//     {projects?.length > 0 && (
+//
+//         <section
+//             id="projects"
+//             className="
+// relative
+// py-28
+// bg-slate-50
+// ">
+//
+//             <div className="max-w-7xl mx-auto px-6">
+//
+//                 <div className="flex items-center justify-between">
+//                     <Link
+//                         href={route('projects')}
+//                         className="text-sm
+// font-medium
+// text-blue-600
+//
+// ">
+//
+//                     <SectionTitle title="შესრულებული პროექტები" />
+//                     </Link>
+//
+//                 </div>
+//
+//                 <div className="
+// grid
+// grid-cols-1
+// sm:grid-cols-2
+// lg:grid-cols-3
+// xl:grid-cols-4
+// gap-10
+// mt-16
+// ">
+//
+//                     {projects.map((project) => (
+//
+//                         <ProjectCard
+//                             key={project.id}
+//                             project={project}
+//                         />
+//
+//                     ))}
+//
+//                 </div>
+//
+//             </div>
+//
+//         </section>
+//
+//     )}
+// {/* ABOUT */}
+// {about && (
+//
+// <section
+// className="
+// relative
+// py-28
+// bg-white
+// ">
+//
+// <AboutUs about={about} />
+//
+// </section>
+//
+// )}
+// {/* CONTACT */}
+//
+//
+// <section
+// id="contact"
+// className="
+// relative
+// py-28
+// bg-gradient-to-b
+// from-slate-50
+// to-white
+// ">
+//
+// <div className="max-w-7xl mx-auto px-6 mb-16">
+//
+//     <SectionTitle title={contact?.contact_form_title ?? "დაგვიკავშირდით"} />
+// </div>
+//
+//     <Contact contact={contact} />
+// </section>
+//
+// <Footer />
+// </div>
+//
+// )
+// }
 import React, { useState } from "react"
-import { usePage } from "@inertiajs/react"
-import SeoHead from "../Components/SeoHead.jsx"
+import { usePage, Link } from "@inertiajs/react"
+import MainLayout from "@/Layouts/MainLayout"
+
 import HeroCarousel from "@/Components/HeroCarousel.jsx"
 import ProductCard from "@/Components/ProductCard.jsx"
 import SectionTitle from "@/Components/SectionTitle"
 import ServiceCard from "@/Components/ServiceCard.jsx"
-import Header from "@/Components/Header.jsx";
-import ProjectCard from "@/Components/ProjectCard.jsx";
-import AboutUs from "../Components/AboutUs.jsx"
-import Footer from "@/Components/Footer.jsx"
-import Contact from '../Components/Contact.jsx'
-import { Link } from "@inertiajs/react"
+import ProjectCard from "@/Components/ProjectCard.jsx"
+import AboutUs from "@/Components/AboutUs.jsx"
+import Contact from "@/Components/Contact.jsx"
+
 export default function Home() {
 
-    const { seo, slides, products, siteSettings, services, projects, about, contact } = usePage().props
+    const { slides, products, siteSettings, services, projects, about, contact } = usePage().props
 
+    const [visibleServicesCount, setVisibleServicesCount] = useState(3)
 
-const [visibleServicesCount, setVisibleServicesCount] = useState(3)
+    const loadMoreServices = () => setVisibleServicesCount(prev => prev + 3)
 
+    const visibleServices = services.slice(0, visibleServicesCount)
 
-const loadMoreServices = () => setVisibleServicesCount(prev => prev + 3)
+    return (
 
+        <MainLayout>
 
-const visibleServices = services.slice(0, visibleServicesCount)
+            <div className="bg-white overflow-hidden">
 
-return (
+                {/* HERO */}
 
-<div className="bg-white overflow-hidden">
+                <HeroCarousel slides={slides} />
 
-<SeoHead seo={seo} pageTitle="Home" />
+                {/* SERVICES */}
 
-<Header siteSettings={siteSettings} />
+                {services.length > 0 && (
 
-{/* HERO */}
+                    <section
+                        id="services"
+                        className="relative py-28 bg-gradient-to-b from-white to-slate-50"
+                    >
 
-<HeroCarousel slides={slides} />
+                        <div className="max-w-7xl mx-auto px-6">
 
+                            <SectionTitle title={siteSettings?.services_header} />
 
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
 
-{/* SERVICES */}
-{services.length > 0 && (
+                                {visibleServices.map((service) => (
 
-<section
-id="services"
-className="
-relative
-py-28
-bg-gradient-to-b
-from-white
-to-slate-50
-">
+                                    <ServiceCard
+                                        key={service.id}
+                                        service={service}
+                                    />
 
-<div className="max-w-7xl mx-auto px-6">
+                                ))}
 
-<SectionTitle title={siteSettings?.services_header} />
+                            </div>
 
-<div className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-3
-gap-10
-mt-16
-">
+                            {visibleServicesCount < services.length && (
 
-{visibleServices.map((service) => (
+                                <div className="flex justify-center mt-16">
 
-<ServiceCard
-key={service.id}
-service={service}
-/>
-
-))}
-
-</div>
-
-{visibleServicesCount < services.length && (
-
-<div className="flex justify-center mt-16">
-
-<button
-onClick={loadMoreServices}
-className="
-px-8
-py-3
+                                    <button
+                                        onClick={loadMoreServices}
+                                        className="
+px-8 py-3
 rounded-xl
 bg-blue-600
 text-white
@@ -93,158 +323,130 @@ hover:bg-blue-700
 hover:scale-[1.03]
 transition
 "
->
-მეტი სერვისი
-</button>
+                                    >
+                                        მეტი სერვისი
+                                    </button>
 
-</div>
+                                </div>
 
-)}
+                            )}
 
-</div>
+                        </div>
 
-</section>
+                    </section>
 
-)}
+                )}
 
-{/* PRODUCTS */}
-{products.length > 0 && (
+                {/* PRODUCTS */}
 
-<section
-id="products"
-className="
-relative
-py-28
-bg-white
-">
+                {products.length > 0 && (
 
-<div className="max-w-7xl mx-auto px-6">
+                    <section
+                        id="products"
+                        className="relative py-28 bg-white"
+                    >
 
-    <Link href="/products">
-        <SectionTitle title={siteSettings?.products_title} />
-    </Link>
-<div className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-3
-xl:grid-cols-4
-gap-10
-mt-16
-">
+                        <div className="max-w-7xl mx-auto px-6">
 
-{products.map((product) => (
+                            <Link href="/products">
+                                <SectionTitle title={siteSettings?.products_title} />
+                            </Link>
 
-<ProductCard
-key={product.id}
-product={product}
-/>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-16">
 
-))}
+                                {products.map((product) => (
 
-</div>
+                                    <ProductCard
+                                        key={product.id}
+                                        product={product}
+                                    />
 
+                                ))}
 
-</div>
+                            </div>
 
-</section>
+                        </div>
 
-)}
+                    </section>
 
+                )}
 
+                {/* PROJECTS */}
 
-    {/* PROJECTS */}
+                {projects?.length > 0 && (
 
-    {projects?.length > 0 && (
+                    <section
+                        id="projects"
+                        className="relative py-28 bg-slate-50"
+                    >
 
-        <section
-            id="projects"
-            className="
-relative
-py-28
-bg-slate-50
-">
+                        <div className="max-w-7xl mx-auto px-6">
 
-            <div className="max-w-7xl mx-auto px-6">
+                            <div className="flex items-center justify-between">
 
-                <div className="flex items-center justify-between">
-                    <Link
-                        href={route('projects')}
-                        className="text-sm
-font-medium
-text-blue-600
+                                <Link
+                                    href={route('projects')}
+                                    className="text-sm font-medium text-blue-600"
+                                >
 
-">
+                                    <SectionTitle title="შესრულებული პროექტები" />
 
-                    <SectionTitle title="შესრულებული პროექტები" />
-                    </Link>
+                                </Link>
 
-                </div>
+                            </div>
 
-                <div className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-3
-xl:grid-cols-4
-gap-10
-mt-16
-">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-16">
 
-                    {projects.map((project) => (
+                                {projects.map((project) => (
 
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                        />
+                                    <ProjectCard
+                                        key={project.id}
+                                        project={project}
+                                    />
 
-                    ))}
+                                ))}
 
-                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                )}
+
+                {/* ABOUT */}
+
+                {about && (
+
+                    <section className="relative py-28 bg-white">
+
+                        <AboutUs about={about} />
+
+                    </section>
+
+                )}
+
+                {/* CONTACT */}
+
+                <section
+                    id="contact"
+                    className="relative py-28 bg-gradient-to-b from-slate-50 to-white"
+                >
+
+                    <div className="max-w-7xl mx-auto px-6 mb-16">
+
+                        <SectionTitle title={contact?.contact_form_title ?? "დაგვიკავშირდით"} />
+
+                    </div>
+
+                    <Contact contact={contact} />
+
+                </section>
 
             </div>
 
-        </section>
+        </MainLayout>
 
-    )}
-{/* ABOUT */}
-{about && (
+    )
 
-<section
-className="
-relative
-py-28
-bg-white
-">
-
-<AboutUs about={about} />
-
-</section>
-
-)}
-{/* CONTACT */}
-
-
-<section
-id="contact"
-className="
-relative
-py-28
-bg-gradient-to-b
-from-slate-50
-to-white
-">
-
-<div className="max-w-7xl mx-auto px-6 mb-16">
-
-    <SectionTitle title={contact?.contact_form_title ?? "დაგვიკავშირდით"} />
-</div>
-
-    <Contact contact={contact} />
-</section>
-
-<Footer />
-</div>
-
-)
 }

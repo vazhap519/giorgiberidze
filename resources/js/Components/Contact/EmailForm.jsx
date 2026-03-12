@@ -32,7 +32,7 @@ export default function EmailForm({
                 borderRadius: contact?.card_radius ?? 16,
                 opacity: (contact?.card_opacity ?? 100) / 100
             }}
-            className={`border p-8 cursor-pointer min-h-[520px] ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
+            className={`border p-8 cursor-pointer h-[580px] ${shadowMap[contact?.card_shadow] ?? "shadow-md"}`}
         >
 
             <h3
@@ -79,12 +79,12 @@ export default function EmailForm({
                 />
 
                 <textarea
-                    rows="4"
+
                     placeholder={contact?.message_placeholder}
                     value={form.message}
                     onChange={(e)=>setForm({...form,message:e.target.value})}
                     style={inputStyle}
-                    className="w-full px-4 py-3 border focus:outline-none"
+                    className="w-full px-4 py-3 border focus:outline-none h-[185px]"
                 />
 
                 <button
@@ -93,7 +93,7 @@ export default function EmailForm({
                     style={{
                         background:`linear-gradient(135deg, ${contact?.button_bg_from}, ${contact?.button_bg_to})`,
                         color:contact?.button_text_color,
-                        borderRadius:contact?.button_radius,
+                      borderRadius:contact?.button_radius,
                         opacity:(contact?.button_opacity ?? 100)/100
                     }}
                     className={`w-full py-3 ${shadowMap[contact?.button_shadow] ?? "shadow-md"}`}
