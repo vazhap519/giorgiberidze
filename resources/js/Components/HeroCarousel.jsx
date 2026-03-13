@@ -9,21 +9,20 @@ export default function HeroCarousel({ slides = [] }) {
     if (!slides.length) return null
 
     return (
-        <section className="relative w-full h-[700px] overflow-hidden">
+
+        <section className="relative w-full h-[70vh] min-h-[420px] md:h-[80vh] overflow-hidden">
 
             <Swiper
                 modules={[Navigation, Autoplay]}
-                navigation
+                navigation={slides.length > 1}
                 autoplay={{ delay: 6000 }}
                 loop={slides.length > 1}
-                className="h-full"
+                className="w-full h-full"
             >
 
                 {slides.map((slide) => {
 
                     const styles = slide.styles ?? {}
-
-                    /* DEFAULTS */
 
                     const radius = styles.button_radius ?? 12
                     const fontSize = styles.button_font_size ?? 16
@@ -34,19 +33,21 @@ export default function HeroCarousel({ slides = [] }) {
 
                         <SwiperSlide key={slide.id}>
 
-                            <div className="relative w-full h-[700px] overflow-hidden">
+                            <div className="relative w-full h-full">
 
-                                {/* BACKGROUND IMAGE */}
+                                {/* BACKGROUND */}
 
                                 {slide.background_url && (
+
                                     <img
                                         src={slide.background_url}
                                         alt={slide.title}
                                         className="absolute inset-0 w-full h-full object-cover"
                                     />
+
                                 )}
 
-                                {/* GRADIENT OVERLAY */}
+                                {/* OVERLAY */}
 
                                 <div
                                     className="absolute inset-0 z-10"
@@ -59,53 +60,39 @@ export default function HeroCarousel({ slides = [] }) {
                                     }}
                                 />
 
-                                {/* SECTION COLOR (optional) */}
-
-                                {styles.section_bg && (
-                                    <div
-                                        className="absolute inset-0 z-0"
-                                        style={{
-                                            backgroundColor: styles.section_bg,
-                                            opacity: 0.2
-                                        }}
-                                    />
-                                )}
-
                                 {/* CONTENT */}
 
-                                <div className="relative z-20 max-w-7xl mx-auto h-full flex items-center justify-between px-6">
+                                <div className="relative z-20 w-full max-w-[1400px] mx-auto h-full flex flex-col lg:flex-row items-center justify-between px-6 gap-10">
 
                                     {/* TEXT */}
 
-                                    <div className="max-w-xl">
+                                    <div className="max-w-xl text-center lg:text-left">
 
                                         <h1
-                                            className={`${styles.title_size || "text-5xl"} font-bold leading-tight`}
+                                            className={`${styles.title_size || "text-3xl md:text-4xl lg:text-5xl"} font-bold leading-tight`}
                                             style={{ color: styles.title_color || "#fff" }}
                                         >
                                             {slide.title}
                                         </h1>
 
                                         {slide.subtitle && (
+
                                             <p
-                                                className="mt-6 text-lg leading-relaxed"
+                                                className="mt-6 text-base md:text-lg leading-relaxed"
                                                 style={{ color: styles.subtitle_color || "#ddd" }}
                                             >
                                                 {slide.subtitle}
                                             </p>
+
                                         )}
 
-                                        {/* BUTTONS */}
-
-                                        <div className="flex flex-wrap gap-4 mt-8">
-
-                                            {/* BUTTON 1 */}
+                                        <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8">
 
                                             {slide.button_text && (
+
                                                 <a
                                                     href={slide.button_url || "#"}
-                                                    target="_self"
-                                                    className="px-7 py-3 font-semibold transition-all duration-300 shadow-lg hover:scale-105 hover:shadow-xl"
+                                                    className="px-6 py-3 font-semibold transition-all duration-300 shadow-lg hover:scale-105"
                                                     style={{
                                                         backgroundColor: styles.button_bg || "#2563eb",
                                                         color: styles.button_text || "#fff",
@@ -117,26 +104,26 @@ export default function HeroCarousel({ slides = [] }) {
                                                 >
                                                     {slide.button_text}
                                                 </a>
+
                                             )}
 
-                                            {/* BUTTON 2 */}
-
                                             {slide.button2_text && (
+
                                                 <a
                                                     href={slide.button2_url || "#"}
-                                                    target="_self"
-                                                    className="px-7 py-3 transition-all duration-300 hover:scale-105"
+                                                    className="px-6 py-3 transition-all duration-300 hover:scale-105"
                                                     style={{
                                                         backgroundColor: styles.button2_bg || "transparent",
                                                         color: styles.button2_text || "#fff",
                                                         borderRadius: `${radius}px`,
                                                         opacity: opacity / 100,
-                                                        border: `${borderWidth}px solid ${styles.button2_border || styles.button_border_color || "#fff"}`,
+                                                        border: `${borderWidth}px solid ${styles.button2_border || "#fff"}`,
                                                         fontSize: `${fontSize}px`
                                                     }}
                                                 >
                                                     {slide.button2_text}
                                                 </a>
+
                                             )}
 
                                         </div>
@@ -146,11 +133,13 @@ export default function HeroCarousel({ slides = [] }) {
                                     {/* PRODUCT IMAGE */}
 
                                     {slide.image_url && (
+
                                         <img
                                             src={slide.image_url}
                                             alt="product"
-                                            className="hidden lg:block w-[520px] object-contain drop-shadow-2xl animate-float"
+                                            className="block w-full max-w-[260px] md:max-w-[420px] xl:max-w-[520px] object-contain drop-shadow-2xl hero-float"
                                         />
+
                                     )}
 
                                 </div>
@@ -166,5 +155,7 @@ export default function HeroCarousel({ slides = [] }) {
             </Swiper>
 
         </section>
+
     )
+
 }

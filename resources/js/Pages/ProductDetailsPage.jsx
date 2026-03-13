@@ -1,271 +1,76 @@
-// import { useState } from "react"
-// import SeoHead from "@/Components/SeoHead.jsx";
-// import Header from "@/Components/Header.jsx";
-// import Footer from "@/Components/Footer.jsx";
-//
-// export default function ProductShow({ product ,siteSettings }) {
-//
-//     const [tab,setTab] = useState("overview")
-//     const [activeImage,setActiveImage] = useState(product.image_url)
-//
-//     return (
-//         <>
-//
-//             <SeoHead seo={seo} pageTitle={product.title} />
-//
-//             <Header siteSettings={siteSettings} />
-//
-//         <div className="max-w-7xl mx-auto px-6 py-16">
-//
-//             <div className="grid lg:grid-cols-2 gap-16">
-//
-//                 {/* IMAGE */}
-//
-//                 <div>
-//
-//                     <img
-//                         src={activeImage || "/images/no-image.png"}
-//                         className="w-full rounded-xl object-contain"
-//                         alt={product.title}
-//                     />
-//
-//                     {product.gallery?.length > 0 && (
-//
-//                         <div className="flex gap-4 mt-6 flex-wrap">
-//
-//                             {product.gallery.map((img,i)=>(
-//
-//                                 <img
-//                                     key={i}
-//                                     src={img.url}
-//                                     onClick={()=>setActiveImage(img.url)}
-//                                     className="
-//                                     w-20 h-20
-//                                     object-cover
-//                                     border
-//                                     rounded
-//                                     cursor-pointer
-//                                     hover:border-red-500
-//                                     transition
-//                                     "
-//                                     alt=""
-//                                 />
-//
-//                             ))}
-//
-//                         </div>
-//
-//                     )}
-//
-//                 </div>
-//
-//                 {/* INFO */}
-//
-//                 <div>
-//
-//                     <h1 className="text-2xl font-bold mb-4">
-//                         {product.title}
-//                     </h1>
-//
-//                     {product.description && (
-//
-//                         <p className="text-gray-600 mb-6">
-//                             {product.description}
-//                         </p>
-//
-//                     )}
-//
-//                     {product.features?.length > 0 && (
-//
-//                         <ul className="space-y-2">
-//
-//                             {product.features.map((f,i)=>(
-//
-//                                 <li key={i} className="flex gap-2 items-start">
-//
-//                                     <span className="text-green-500">✓</span>
-//
-//                                     <span className="break-all">
-//                                         {f.filter} {f.value}
-//                                     </span>
-//
-//                                 </li>
-//
-//                             ))}
-//
-//                         </ul>
-//
-//                     )}
-//
-//                 </div>
-//
-//             </div>
-//
-//             {/* TABS */}
-//
-//             <div className="mt-16">
-//
-//                 <div className="flex gap-10 border-b pb-4">
-//
-//                     <button
-//                         onClick={()=>setTab("overview")}
-//                         className={tab==="overview" ? "font-semibold border-b-2 border-black pb-2" : ""}
-//                     >
-//                         {siteSettings?.product_overview ?? "პროდუქტის განხილვა"}
-//                     </button>
-//
-//                     <button
-//                         onClick={()=>setTab("features")}
-//                         className={tab==="features" ? "font-semibold border-b-2 border-black pb-2" : ""}
-//                     >
-//                         {siteSettings?.product_Features ?? "პროდუქტის მახასიათებლები"}
-//                     </button>
-//
-//                     <button
-//                         onClick={()=>setTab("downloads")}
-//                         className={tab==="downloads" ? "font-semibold border-b-2 border-black pb-2" : ""}
-//                     >
-//                         {siteSettings?.Downloads_Features ?? 'გადმოწერა' }
-//                     </button>
-//
-//                 </div>
-//
-//                 {/* OVERVIEW */}
-//
-//                 {tab==="overview" && (
-//
-//                     <div className="mt-10 text-gray-700 leading-relaxed">
-//
-//                         {product.description}
-//
-//                     </div>
-//
-//                 )}
-//
-//                 {/* FEATURES */}
-//
-//                 {tab==="features" && product.specs?.length > 0 && (
-//
-//                     <div className="mt-10">
-//
-//                         <table className="w-full border border-gray-200">
-//
-//                             <tbody>
-//
-//                             {product.specs.map((row,i)=>(
-//
-//                                 <tr key={i} className="border-b">
-//
-//                                     <td className="p-3 font-semibold bg-gray-50 w-[40%]">
-//                                         {row.label}
-//                                     </td>
-//
-//                                     <td className="p-3">
-//                                         {row.value}
-//                                     </td>
-//
-//                                 </tr>
-//
-//                             ))}
-//
-//                             </tbody>
-//
-//                         </table>
-//
-//                     </div>
-//
-//                 )}
-//
-//                 {/* DOWNLOADS */}
-//
-//                 {tab==="downloads" && product.downloads?.length > 0 && (
-//
-//                     <div className="mt-10 space-y-4">
-//
-//                         {product.downloads.map((file,i)=>(
-//
-//                             <div
-//                                 key={i}
-//                                 className="
-//                                 flex
-//                                 justify-between
-//                                 items-center
-//                                 border
-//                                 p-4
-//                                 rounded
-//                                 hover:bg-gray-50
-//                                 transition
-//                                 "
-//                             >
-//
-//                                 <span className="break-all">
-//                                     {file.name}
-//                                 </span>
-//                                 <a
-//                                     href={file.url}
-//                                     target="_blank"
-//                                     rel="noopener noreferrer"
-//                                     style={{
-//                                         background: product.download_btn_bg,
-//                                         color: product.download_btn_text,
-//                                         borderRadius: `${product.download_btn_radius}px`,
-//                                         fontSize: `${product.download_btn_size}px`
-//                                     }}
-//                                     className="
-//     px-4
-//     py-2
-//     transition
-//     "
-//                                     onMouseEnter={(e)=>e.target.style.background = product.download_btn_hover}
-//                                     onMouseLeave={(e)=>e.target.style.background = product.download_btn_bg}
-//                                 >
-//                                     {siteSettings?.Downloads_Features ?? "გადმოწერა"}
-//                                 </a>
-//                             </div>
-//
-//                         ))}
-//
-//                     </div>
-//
-//                 )}
-//
-//             </div>
-//
-//         </div>
-// <Footer />
-//             </>
-//     )
-//
-// }
-import { useState } from "react"
-import MainLayout from "@/Layouts/MainLayout"
+import { useState } from "react";
+import MainLayout from "@/Layouts/MainLayout.jsx";
 
 export default function ProductShow({ product, siteSettings }) {
 
     const [tab,setTab] = useState("overview")
     const [activeImage,setActiveImage] = useState(product.image_url)
 
+    const settings = {
+        single_image_radius: siteSettings?.single_image_radius ?? 12,
+        single_image_max_height: siteSettings?.single_image_max_height ?? 500,
+
+        single_gallery_thumb_width: siteSettings?.single_gallery_thumb_width ?? 80,
+        single_gallery_thumb_height: siteSettings?.single_gallery_thumb_height ?? 80,
+        single_gallery_border_color: siteSettings?.single_gallery_border_color ?? "#e5e7eb",
+        single_gallery_hover_border: siteSettings?.single_gallery_hover_border ?? "#ef4444",
+
+        single_title_font_size: siteSettings?.single_title_font_size ?? 24,
+        single_title_color: siteSettings?.single_title_color ?? "#000000",
+
+        single_description_color: siteSettings?.single_description_color ?? "#6b7280",
+        single_description_font_size: siteSettings?.single_description_font_size ?? 16,
+
+        single_feature_icon_color: siteSettings?.single_feature_icon_color ?? "#22c55e",
+        single_feature_font_size: siteSettings?.single_feature_font_size ?? 15,
+
+        single_tabs_border_color: siteSettings?.single_tabs_border_color ?? "#e5e7eb",
+        single_tabs_active_border: siteSettings?.single_tabs_active_border ?? "#000000",
+        single_tabs_font_size: siteSettings?.single_tabs_font_size ?? 16,
+
+        single_spec_table_border: siteSettings?.single_spec_table_border ?? "#e5e7eb",
+        single_spec_label_bg: siteSettings?.single_spec_label_bg ?? "#f9fafb",
+
+        single_download_btn_bg: siteSettings?.single_download_btn_bg ?? "#000000",
+        single_download_btn_hover: siteSettings?.single_download_btn_hover ?? "#333333",
+        single_download_btn_text: siteSettings?.single_download_btn_text ?? "#ffffff",
+        single_download_btn_radius: siteSettings?.single_download_btn_radius ?? 6,
+        single_download_btn_size: siteSettings?.single_download_btn_size ?? 14,
+
+        single_download_card_radius: siteSettings?.single_download_card_radius ?? 6,
+        single_download_card_border: siteSettings?.single_download_card_border ?? "#e5e7eb",
+        single_download_card_hover: siteSettings?.single_download_card_hover ?? "#f9fafb",
+    }
+
     return (
 
         <MainLayout>
 
-            <div className="max-w-7xl mx-auto px-6 py-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
 
-                <div className="grid lg:grid-cols-2 gap-16">
+                {/* PRODUCT GRID */}
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 
                     {/* IMAGE */}
 
-                    <div>
+                    <div className="w-full">
 
                         <img
                             src={activeImage || "/images/no-image.png"}
-                            className="w-full rounded-xl object-contain"
                             alt={product.title}
+                            className="w-full h-auto object-contain rounded-xl"
+                            style={{
+                                borderRadius: `${settings.single_image_radius}px`,
+                                maxHeight: `${settings.single_image_max_height}px`
+                            }}
                         />
+
+                        {/* GALLERY */}
 
                         {product.gallery?.length > 0 && (
 
-                            <div className="flex gap-4 mt-6 flex-wrap">
+                            <div className="flex gap-3 mt-6 overflow-x-auto pb-2">
 
                                 {product.gallery.map((img,i)=>(
 
@@ -273,17 +78,14 @@ export default function ProductShow({ product, siteSettings }) {
                                         key={i}
                                         src={img.url}
                                         onClick={()=>setActiveImage(img.url)}
-                                        className="
-w-20
-h-20
-object-cover
-border
-rounded
-cursor-pointer
-hover:border-red-500
-transition
-"
-                                        alt=""
+                                        className="object-cover border rounded cursor-pointer transition hover:scale-105 flex-shrink-0"
+                                        style={{
+                                            width: `${settings.single_gallery_thumb_width}px`,
+                                            height: `${settings.single_gallery_thumb_height}px`,
+                                            borderColor: settings.single_gallery_border_color
+                                        }}
+                                        onMouseEnter={(e)=>e.target.style.borderColor = settings.single_gallery_hover_border}
+                                        onMouseLeave={(e)=>e.target.style.borderColor = settings.single_gallery_border_color}
                                     />
 
                                 ))}
@@ -294,17 +96,30 @@ transition
 
                     </div>
 
+
                     {/* INFO */}
 
                     <div>
 
-                        <h1 className="text-2xl font-bold mb-4">
+                        <h1
+                            className="font-bold mb-4"
+                            style={{
+                                fontSize: `${settings.single_title_font_size}px`,
+                                color: settings.single_title_color
+                            }}
+                        >
                             {product.title}
                         </h1>
 
                         {product.description && (
 
-                            <p className="text-gray-600 mb-6">
+                            <p
+                                className="mb-6 leading-relaxed"
+                                style={{
+                                    color: settings.single_description_color,
+                                    fontSize: `${settings.single_description_font_size}px`
+                                }}
+                            >
                                 {product.description}
                             </p>
 
@@ -318,11 +133,18 @@ transition
 
                                     <li key={i} className="flex gap-2 items-start">
 
-                                        <span className="text-green-500">✓</span>
-
-                                        <span className="break-all">
-{f.filter} {f.value}
+<span style={{color: settings.single_feature_icon_color}}>
+✓
 </span>
+
+                                        <span
+                                            className="break-words"
+                                            style={{
+                                                fontSize: `${settings.single_feature_font_size}px`
+                                            }}
+                                        >
+                                            {f.filter} {f.value}
+                                        </span>
 
                                     </li>
 
@@ -333,134 +155,6 @@ transition
                         )}
 
                     </div>
-
-                </div>
-
-                {/* TABS */}
-
-                <div className="mt-16">
-
-                    <div className="flex gap-10 border-b pb-4">
-
-                        <button
-                            onClick={()=>setTab("overview")}
-                            className={tab==="overview" ? "font-semibold border-b-2 border-black pb-2" : ""}
-                        >
-                            {siteSettings?.product_overview ?? "პროდუქტის განხილვა"}
-                        </button>
-
-                        <button
-                            onClick={()=>setTab("features")}
-                            className={tab==="features" ? "font-semibold border-b-2 border-black pb-2" : ""}
-                        >
-                            {siteSettings?.product_Features ?? "პროდუქტის მახასიათებლები"}
-                        </button>
-
-                        <button
-                            onClick={()=>setTab("downloads")}
-                            className={tab==="downloads" ? "font-semibold border-b-2 border-black pb-2" : ""}
-                        >
-                            {siteSettings?.Downloads_Features ?? "გადმოწერა"}
-                        </button>
-
-                    </div>
-
-                    {/* OVERVIEW */}
-
-                    {tab==="overview" && (
-
-                        <div className="mt-10 text-gray-700 leading-relaxed">
-                            {product.description}
-                        </div>
-
-                    )}
-
-                    {/* FEATURES */}
-
-                    {tab==="features" && product.specs?.length > 0 && (
-
-                        <div className="mt-10">
-
-                            <table className="w-full border border-gray-200">
-
-                                <tbody>
-
-                                {product.specs.map((row,i)=>(
-
-                                    <tr key={i} className="border-b">
-
-                                        <td className="p-3 font-semibold bg-gray-50 w-[40%]">
-                                            {row.label}
-                                        </td>
-
-                                        <td className="p-3">
-                                            {row.value}
-                                        </td>
-
-                                    </tr>
-
-                                ))}
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                    )}
-
-                    {/* DOWNLOADS */}
-
-                    {tab==="downloads" && product.downloads?.length > 0 && (
-
-                        <div className="mt-10 space-y-4">
-
-                            {product.downloads.map((file,i)=>(
-
-                                <div
-                                    key={i}
-                                    className="
-flex
-justify-between
-items-center
-border
-p-4
-rounded
-hover:bg-gray-50
-transition
-"
-                                >
-
-<span className="break-all">
-{file.name}
-</span>
-
-                                    <a
-                                        href={file.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{
-                                            background: product.download_btn_bg,
-                                            color: product.download_btn_text,
-                                            borderRadius: `${product.download_btn_radius}px`,
-                                            fontSize: `${product.download_btn_size}px`
-                                        }}
-                                        className="px-4 py-2 transition"
-                                        onMouseEnter={(e)=>e.target.style.background = product.download_btn_hover}
-                                        onMouseLeave={(e)=>e.target.style.background = product.download_btn_bg}
-                                    >
-
-                                        {siteSettings?.Downloads_Features ?? "გადმოწერა"}
-
-                                    </a>
-
-                                </div>
-
-                            ))}
-
-                        </div>
-
-                    )}
 
                 </div>
 

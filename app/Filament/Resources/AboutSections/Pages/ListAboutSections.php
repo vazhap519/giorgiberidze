@@ -13,12 +13,10 @@ class ListAboutSections extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        if (AboutSection::count()===0){
+
             return [
                 CreateAction::make(),
             ];
-        }else{
-            return [];
-        }
+
     }
 }

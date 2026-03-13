@@ -54,6 +54,7 @@ class Product extends Model implements HasMedia
         'download_btn_text',
         'download_btn_radius',
         'download_btn_size',
+
     ];
 
     /*

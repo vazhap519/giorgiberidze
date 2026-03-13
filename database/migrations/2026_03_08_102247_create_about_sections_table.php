@@ -12,11 +12,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-
+            $table->boolean('is_active')->default(true);
             $table->string('experience_years')->nullable();
             $table->string('experience_label')->nullable();
 
-            $table->boolean('is_active')->default(true);
+
             $table->string('bg_color')->default('#ffffff');
 
             $table->string('title_color')->default('#111827');

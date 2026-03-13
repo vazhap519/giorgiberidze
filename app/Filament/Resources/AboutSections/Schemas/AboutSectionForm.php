@@ -22,213 +22,204 @@ class AboutSectionForm
             Section::make('About სექცია')
                 ->schema([
 
-                    TextInput::make('title')
-                        ->label('სათაური')
-                        ->required(),
+                    Section::make('ჩვენს შესახებ საერთო აღწერა')
+                        ->schema([
 
-                    Textarea::make('description')
-                        ->label('აღწერა')
-                        ->rows(4)
-                        ->required(),
+                            TextInput::make('title')
+                                ->label('სათაური')
+                                ->required(),
 
-                    TextInput::make('experience_years')
-                        ->label('გამოცდილების წლები'),
+                            Textarea::make('description')
+                                ->label('აღწერა')
+                                ->rows(4)
+                                ->required(),
 
-                    TextInput::make('experience_label')
-                        ->label('გამოცდილების ტექსტი'),
+                            SpatieMediaLibraryFileUpload::make('about_image')
+                                ->label('სურათები')
+                                ->collection('about_image')
+                                ->reorderable()
+                                ->image()
+                                ->imageEditor()
+                                ->disk('public')
+                                ->conversion('webp')
+                                ->responsiveImages(),
+
+                            TextInput::make('experience_years')
+                                ->label('გამოცდილების წლები'),
+
+                            TextInput::make('experience_label')
+                                ->label('გამოცდილების ტექსტი'),
+
+                        ])->columns(2),
 
                     Toggle::make('is_active')
                         ->label('აქტიურია')
                         ->default(true),
 
-                    SpatieMediaLibraryFileUpload::make('about_image')
-                        ->label('სურათი')
-                        ->collection('about_image')
-                        ->image()
-                        ->imageEditor()
-                        ->disk('public')
-                        ->conversion('webp')
-                        ->responsiveImages()
+                    /*
+                    |--------------------------------------------------------------------------
+                    | სექციის სტილები
+                    |--------------------------------------------------------------------------
+                    */
 
-                ])->columns(2),
+                    Section::make('სექციის სტილები')
+                        ->schema([
 
-            /*
-            |--------------------------------
-            | მახასიათებლები
-            |--------------------------------
-            */
+                            ColorPicker::make('bg_color')
+                                ->label('ფონის ფერი')
+                                ->default('#ffffff'),
 
-            Repeater::make('features')
-                ->relationship()
-                ->label('მახასიათებლები')
-                ->schema([
+                            ColorPicker::make('title_color')
+                                ->label('სათაურის ფერი')
+                                ->default('#111827'),
 
-                    TextInput::make('title')
-                        ->label('სათაური')
-                        ->required(),
+                            ColorPicker::make('description_color')
+                                ->label('აღწერის ფერი')
+                                ->default('#4b5563'),
 
-                    Textarea::make('description')
-                        ->label('აღწერა')
-                        ->required(),
+                            ColorPicker::make('card_bg')
+                                ->label('ბარათის ფონი')
+                                ->default('#ffffff'),
 
-                    ColorPicker::make('card_bg')
-                        ->label('ბარათის ფონი')
-                        ->default('#ffffff'),
+                            ColorPicker::make('card_border')
+                                ->label('ბარათის საზღვარი')
+                                ->default('#e5e7eb'),
 
-                    ColorPicker::make('card_border')
-                        ->label('ბარათის საზღვარი')
-                        ->default('#e5e7eb'),
+                            ColorPicker::make('card_hover_color')
+                                ->label('Hover ფერი')
+                                ->default('#2563eb'),
 
-                    ColorPicker::make('title_color')
-                        ->label('სათაურის ფერი')
-                        ->default('#111827'),
+                            ColorPicker::make('experience_bg')
+                                ->label('გამოცდილების ფონი')
+                                ->default('#ffffff'),
 
-                    ColorPicker::make('description_color')
-                        ->label('აღწერის ფერი')
-                        ->default('#4b5563'),
+                            ColorPicker::make('experience_text_color')
+                                ->label('გამოცდილების ტექსტის ფერი')
+                                ->default('#2563eb'),
 
-                    Select::make('card_radius')
-                        ->label('კუთხის მომრგვალება')
-                        ->options([
-                            12 => '12px',
-                            16 => '16px',
-                            20 => '20px',
-                            24 => '24px'
+                            Select::make('title_size')
+                                ->label('სათაურის ზომა')
+                                ->options([
+                                    32 => '32px',
+                                    40 => '40px',
+                                    48 => '48px',
+                                    56 => '56px'
+                                ])
+                                ->default(48),
+
+                            Select::make('description_size')
+                                ->label('აღწერის ზომა')
+                                ->options([
+                                    14 => '14px',
+                                    16 => '16px',
+                                    18 => '18px',
+                                    20 => '20px'
+                                ])
+                                ->default(18),
+
+                            Select::make('card_radius')
+                                ->label('ბარათის კუთხე')
+                                ->options([
+                                    12 => '12px',
+                                    16 => '16px',
+                                    20 => '20px',
+                                    24 => '24px'
+                                ])
+                                ->default(16),
+
+                            Select::make('blur')
+                                ->label('ბლური')
+                                ->options([
+                                    0 => '0px',
+                                    10 => '10px',
+                                    20 => '20px'
+                                ])
+                                ->default(0),
+
+                            Select::make('opacity')
+                                ->label('გამჭვირვალობა')
+                                ->options([
+                                    '1' => '1',
+                                    '0.9' => '0.9',
+                                    '0.8' => '0.8'
+                                ])
+                                ->default('1'),
+
+                            Select::make('padding_top')
+                                ->label('ზედა დაშორება')
+                                ->options([
+                                    80 => '80px',
+                                    120 => '120px',
+                                    160 => '160px'
+                                ])
+                                ->default(120),
+
+                            Select::make('padding_bottom')
+                                ->label('ქვედა დაშორება')
+                                ->options([
+                                    80 => '80px',
+                                    120 => '120px',
+                                    160 => '160px'
+                                ])
+                                ->default(120),
+
                         ])
-                        ->default(16),
+                        ->columns(2)
 
-                    Select::make('blur')
-                        ->label('ბლური')
-                        ->options([
-                            0 => '0px',
-                            10 => '10px',
-                            20 => '20px'
-                        ])
-                        ->default(0),
+                ]),
+            Section::make('პიროვნებები')->schema([
+                Repeater::make('people')
+                    ->relationship()
+                    ->label('პიროვნებები')
+                    ->schema([
 
-                    Select::make('opacity')
-                        ->label('გამჭვირვალობა')
-                        ->options([
-                            '1' => '1',
-                            '0.9' => '0.9',
-                            '0.8' => '0.8'
-                        ])
-                        ->default('1')
+                        TextInput::make('person_name')
+                            ->label('სახელი გვარი')
+                            ->required(),
 
-                ])
-                ->columns(2)
-                ->columnSpanFull(),
+                        TextInput::make('person_position')
+                            ->label('პოზიცია'),
 
-            /*
-            |--------------------------------
-            | სექციის სტილები
-            |--------------------------------
-            */
+                        TextInput::make('person_experience_years')
+                            ->label('გამოცდილების წლები'),
 
-            Section::make('სექციის სტილები')
-                ->schema([
+                        Textarea::make('person_experience_description')
+                            ->label('აღწერა'),
 
-                    ColorPicker::make('bg_color')
-                        ->label('ფონის ფერი')
-                        ->default('#ffffff'),
+                        SpatieMediaLibraryFileUpload::make('person_images')
+                            ->label('სურათები')
+                            ->collection('person_images')
+                            ->multiple()
+                            ->reorderable()
+                            ->image()
+                            ->imageEditor()
+                            ->disk('public')
+                            ->conversion('webp')
+                            ->responsiveImages(),
 
-                    ColorPicker::make('title_color')
-                        ->label('სათაურის ფერი')
-                        ->default('#111827'),
+                        ColorPicker::make('person_text_color')
+                            ->default('#ffffff'),
 
-                    ColorPicker::make('description_color')
-                        ->label('აღწერის ფერი')
-                        ->default('#4b5563'),
+                        ColorPicker::make('person_overlay_color')
+                            ->default('#000000'),
 
-                    ColorPicker::make('card_bg')
-                        ->label('ბარათის ფონი')
-                        ->default('#ffffff'),
+                        TextInput::make('person_overlay_opacity')
+                            ->numeric()
+                            ->default(0.7),
 
-                    ColorPicker::make('card_border')
-                        ->label('ბარათის საზღვარი')
-                        ->default('#e5e7eb'),
+                        Select::make('person_text_align')
+                            ->options([
+                                'left' => 'Left',
+                                'center' => 'Center',
+                                'right' => 'Right'
+                            ])
+                            ->default('center'),
 
-                    ColorPicker::make('card_hover_color')
-                        ->label('ბარათის Hover ფერი')
-                        ->default('#2563eb'),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull()
 
-                    ColorPicker::make('experience_bg')
-                        ->label('გამოცდილების ფონი')
-                        ->default('#ffffff'),
-
-                    ColorPicker::make('experience_text_color')
-                        ->label('გამოცდილების ტექსტის ფერი')
-                        ->default('#2563eb'),
-
-                    Select::make('title_size')
-                        ->label('სათაურის ზომა')
-                        ->options([
-                            32 => '32px',
-                            40 => '40px',
-                            48 => '48px',
-                            56 => '56px'
-                        ])
-                        ->default(48),
-
-                    Select::make('description_size')
-                        ->label('აღწერის ზომა')
-                        ->options([
-                            14 => '14px',
-                            16 => '16px',
-                            18 => '18px',
-                            20 => '20px'
-                        ])
-                        ->default(18),
-
-                    Select::make('card_radius')
-                        ->label('ბარათის კუთხის მომრგვალება')
-                        ->options([
-                            12 => '12px',
-                            16 => '16px',
-                            20 => '20px',
-                            24 => '24px'
-                        ])
-                        ->default(16),
-
-                    Select::make('blur')
-                        ->label('ბლური')
-                        ->options([
-                            0 => '0px',
-                            10 => '10px',
-                            20 => '20px'
-                        ])
-                        ->default(0),
-
-                    Select::make('opacity')
-                        ->label('გამჭვირვალობა')
-                        ->options([
-                            '1' => '1',
-                            '0.9' => '0.9',
-                            '0.8' => '0.8'
-                        ])
-                        ->default('1'),
-
-                    Select::make('padding_top')
-                        ->label('ზედა დაშორება')
-                        ->options([
-                            80 => '80px',
-                            120 => '120px',
-                            160 => '160px'
-                        ])
-                        ->default(120),
-
-                    Select::make('padding_bottom')
-                        ->label('ქვედა დაშორება')
-                        ->options([
-                            80 => '80px',
-                            120 => '120px',
-                            160 => '160px'
-                        ])
-                        ->default(120)
-
-                ])
-                ->columns(2)
-
+            ])
         ]);
     }
 }

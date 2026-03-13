@@ -12,6 +12,7 @@ class AboutSection extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
+
         'title',
         'description',
 
@@ -35,12 +36,12 @@ class AboutSection extends Model implements HasMedia
         'description_size',
 
         'card_radius',
-
         'blur',
         'opacity',
 
         'padding_top',
-        'padding_bottom'
+        'padding_bottom',
+
     ];
 
     protected $casts = [
@@ -51,34 +52,11 @@ class AboutSection extends Model implements HasMedia
         'image_url'
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
-
-    public function features()
-    {
-        return $this->hasMany(AboutFeature::class);
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Media Collections
-    |--------------------------------------------------------------------------
-    */
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('about_image')
             ->singleFile();
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Media Conversions
-    |--------------------------------------------------------------------------
-    */
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -88,14 +66,12 @@ class AboutSection extends Model implements HasMedia
             ->nonQueued();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Accessor
-    |--------------------------------------------------------------------------
-    */
-
     public function getImageUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('about_image', 'webp');
+    }
+    public function people()
+    {
+        return $this->hasMany(AboutPerson::class);
     }
 }

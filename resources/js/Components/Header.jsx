@@ -78,7 +78,18 @@ export default function Header({ siteSettings }) {
     const handleBgHover = (e, color) => {
         e.currentTarget.style.backgroundColor = color;
     };
+    const logoStyle = {
+        width: `${siteSettings?.site_logo_width || 120}px`,
+        height: `${siteSettings?.site_logo_height || 40}px`,
+        objectFit: siteSettings?.site_logo_fit || "contain",
+        borderRadius: `${siteSettings?.site_logo_radius || 0}px`
+    }
 
+    const siteNameStyle = {
+        color: siteSettings?.site_header_text_color || "#1e293b",
+        fontSize: `${siteSettings?.site_name_size || 18}px`,
+        fontWeight: siteSettings?.site_name_weight || 600
+    }
     return (
 
         <div className="fixed w-full" style={{ zIndex: headerStyle.zIndex }}>
@@ -97,13 +108,17 @@ export default function Header({ siteSettings }) {
                             <img
                                 src={logo}
                                 alt={siteSettings?.site_name}
-                                className="h-10 w-auto"
+                                style={logoStyle}
+                                className="transition duration-300"
                             />
                         )}
 
-                        <span className="hidden sm:block font-semibold text-lg text-slate-800">
-                            {siteSettings?.site_name}
-                        </span>
+                        <span
+                            style={siteNameStyle}
+                            className="hidden sm:block"
+                        >
+    {siteSettings?.site_name}
+</span>
 
                     </Link>
 

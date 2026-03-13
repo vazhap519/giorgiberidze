@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CarouselSlide;
 use App\Models\Contact;
+use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Project;
@@ -71,19 +72,28 @@ class HomePageController extends Controller
         ->append(['cover_image']);
 
     $about = AboutSection::query()
+        ->with('people.media')
         ->where('is_active', true)
-        ->with('features')
         ->first()
         ?->append(['image_url']);
     $contact = Contact::first();
-
+    $partners = Partner::where('active', true)
+        ->get()
+        ->map(fn ($p) => [
+            'id' => $p->id,
+            'title' => $p->title,
+            'url' => $p->url,
+            'styles' => $p->styles,
+            'image_url' => $p->image_url
+        ]);
     return Inertia::render('Home', [
         'slides' => $slides,
         'products' => $products,
         'services' => $services,
         'projects' => $projects,
         'about' => $about,
-        'contact' => $contact
+        'contact' => $contact,
+        'partners' => $partners,
     ]);
 }
 }
